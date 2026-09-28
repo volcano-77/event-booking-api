@@ -4,6 +4,29 @@
 
 A small original event booking REST API built as a system under test for software testing practice. The business model follows common event reservation scenarios. The implementation focuses on authentication, capacity boundaries, ownership, state changes, and testable error responses.
 
+## Project Status
+
+This repository deliberately separates the implemented system from testing work that is prepared but not yet executed.
+
+### Implemented system capabilities
+
+- 11 REST endpoints for registration, login, event management, booking, cancellation, and booking views.
+- JWT authentication with distinct missing, malformed, invalid, and expired-token responses.
+- User and Organizer role checks plus event-owner authorization.
+- Server-side field, boundary, strict-ID, and future-time validation.
+- MySQL foreign keys, unique constraints, indexed booking counts, and event-row locking for booking transactions.
+- Swagger UI and OpenAPI source documentation.
+
+### Prepared test assets — execution status: Not Run
+
+- API test plan and 63 manual cases with stable IDs.
+- Postman collection, local environment template, token extraction, request dependencies, assertions, and a critical business chain.
+- Read-only SQL validation goals and query templates.
+- Evidence, defect-report, and test-summary templates.
+- Local Newman runner that writes raw execution artifacts only when the tester explicitly runs it.
+
+No formal API test result, confirmed defect, screenshot, conclusion, or test success rate is claimed in this repository at this stage.
+
 ## Why This Project Exists
 
 The API gives a concrete target for Postman and later Newman testing. Its few endpoints have enough rules to exercise positive paths, invalid inputs, permission checks, conflicts, and database consistency without a frontend or unrelated infrastructure.
@@ -66,22 +89,42 @@ To run the disposable development check, start the server and run `npm run smoke
 
 Open `http://localhost:3000/api/docs` while the server runs. The source [OpenAPI file](docs/openapi.yaml) is also served at `/api/openapi.yaml`; [API notes](docs/api-spec.md) explain IDs and rebooking. Authentication uses `Authorization: Bearer <token>`.
 
+## Prepared Test Workspace
+
+Start with the [API test plan](docs/test-plan.md), then read the [manual API cases](test-cases/api-test-cases.md). The plan defines scope, identities, entry criteria, evidence rules, and execution boundaries. Every case begins as `Not Run`.
+
+Import these into Postman:
+
+- `postman/Event-Booking-API.postman_collection.json`
+- `postman/local.postman_environment.json`
+
+Before running the main chain, create a dedicated local Organizer account and enter its email and password in Postman's local/current environment values. Run the `Main Business Chain - Not Run` folder from item 01 so generated users, tokens, event ID, and booking IDs are created in dependency order. See [Postman instructions](postman/README.md).
+
+After you understand and manually execute the chain, Newman is available through `npm run test:api`. It requires `EVENT_BOOKING_ORGANIZER_EMAIL` and `EVENT_BOOKING_ORGANIZER_PASSWORD` in the current PowerShell process and writes raw JSON/JUnit evidence under `evidence/newman/<run-id>/`. See [Newman instructions](scripts/newman/README.md). The runner has not been executed as part of preparing this skeleton.
+
+Use [SQL validation templates](sql-validation/README.md) only against the same test database. Create defect reports only from reproducible observed behavior, and complete a copy of the [test summary template](reports/test-summary-template.md) only after real execution.
+
 ## Testing Goals
 
 Practice equivalence partitioning, boundary values, authentication, role and object ownership checks, strict ID validation, duplicate requests, state transitions, booking capacity, and database consistency. Postman environments and dynamic variables can carry generated tokens and IDs into later requests.
 
 ## Testing Scope
 
-The [testing scope draft](docs/testing-scope.md) lists planned Auth, Event, Booking, and data consistency checks, plus later Postman, Newman, and optional concurrency work. It intentionally contains no Pass/Fail claims. The [Postman](postman/README.md) and [tests](tests/README.md) directories are placeholders for work backed by actual execution.
+The [testing scope draft](docs/testing-scope.md) gives the high-level direction. The detailed [test plan](docs/test-plan.md) and [API case catalog](test-cases/api-test-cases.md) cover Auth, Event, Booking, authorization, boundaries, state changes, critical chains, and data consistency. All execution statuses remain `Not Run` or `Pending` until the tester records real evidence.
 
 ## Project Structure
 
 ```text
 src/       Express app, routes, validation, JWT middleware, MySQL schema and connection
-scripts/   database setup, organizer provisioning, disposable smoke check
-docs/      business rules, OpenAPI, API notes, database design, testing scope
-postman/   future collection guidance
-tests/     future test assets and real evidence
+scripts/   database setup, organizer provisioning, smoke check, and explicit Newman runner
+docs/      business rules, OpenAPI, database design, testing scope, and detailed test plan
+test-cases/ manual API cases; initial status Not Run
+postman/   prepared collection, environment template, and usage guide
+sql-validation/ read-only database validation targets and query templates
+evidence/  guidance and future real execution artifacts
+bug-reports/ defect-report guidance and blank template; no confirmed defects
+reports/   blank test-summary template
+tests/     pointer for future additional automated test assets
 ```
 
 ## Known Limitations

@@ -1,0 +1,25 @@
+{
+  "name": "event-booking-api-testing",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A small event booking API built as a system under test",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "db:init": "node scripts/init-db.js",
+    "create:organizer": "node scripts/create-organizer.js",
+    "smoke": "node scripts/smoke.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^18.0.4",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mysql2": "^3.24.4",
+    "swagger-ui-express": "^5.0.1",
+    "yamljs": "^0.3.0"
+  }
+}

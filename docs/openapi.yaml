@@ -1,0 +1,224 @@
+openapi: 3.0.3
+info:
+  title: Event Booking API Testing
+  version: 1.0.0
+  description: Small event booking system designed as a REST API testing target.
+servers:
+  - url: http://localhost:3000
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code: { type: string }
+            message: { type: string }
+    EventInput:
+      type: object
+      additionalProperties: false
+      required: [title, capacity, start_time]
+      properties:
+        title: { type: string, minLength: 1, maxLength: 120 }
+        description: { type: string, maxLength: 2000 }
+        capacity: { type: integer, minimum: 1, maximum: 100000 }
+        start_time: { type: string, format: date-time, description: Future timestamp with explicit timezone }
+    Event:
+      allOf:
+        - $ref: '#/components/schemas/EventInput'
+        - type: object
+          properties:
+            id: { type: string, example: '1' }
+            status: { type: string, enum: [OPEN, CLOSED] }
+            organizer_id: { type: string }
+            active_bookings: { type: integer }
+            created_at: { type: string, format: date-time }
+    Booking:
+      type: object
+      properties:
+        id: { type: string }
+        event_id: { type: string }
+        user_id: { type: string }
+        status: { type: string, enum: [ACTIVE, CANCELLED] }
+        created_at: { type: string, format: date-time }
+        updated_at: { type: string, format: date-time }
+  parameters:
+    EventId:
+      name: id
+      in: path
+      required: true
+      description: Positive decimal integer without leading zeros or suffix
+      schema: { type: string, pattern: '^[1-9][0-9]*$' }
+  responses:
+    BadRequest:
+      description: Invalid body, field, or ID
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    Unauthorized:
+      description: Missing, invalid, or expired token; invalid credentials for login
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    Forbidden:
+      description: Role or ownership denied
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    NotFound:
+      description: Event or own booking not found
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    Conflict:
+      description: Duplicate, full, closed, or otherwise conflicting state
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+paths:
+  /api/auth/register:
+    post:
+      summary: Register a user
+      description: Public. Always creates role user; role input is rejected.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [username, email, password]
+              properties:
+                username: { type: string, minLength: 3, maxLength: 50 }
+                email: { type: string, format: email }
+                password: { type: string, minLength: 8, maxLength: 72, description: At most 72 UTF-8 bytes }
+      responses:
+        '201': { description: User created with ID, username, email, and role }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '409': { $ref: '#/components/responses/Conflict' }
+  /api/auth/login:
+    post:
+      summary: Log in
+      description: Public. Returns JWT and basic user information.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [email, password]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string }
+      responses:
+        '200': { description: Bearer token and user object }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/events:
+    get:
+      summary: List events
+      description: Public. Includes OPEN and CLOSED events and active booking counts.
+      responses:
+        '200':
+          description: Event list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  events: { type: array, items: { $ref: '#/components/schemas/Event' } }
+    post:
+      summary: Create event
+      description: Organizer only. Event starts OPEN.
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/EventInput' } } }
+      responses:
+        '201': { description: Created event }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+  /api/events/{id}:
+    parameters: [{ $ref: '#/components/parameters/EventId' }]
+    get:
+      summary: Get event
+      description: Public. Includes active booking count.
+      responses:
+        '200':
+          description: Event object
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Event' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    put:
+      summary: Replace editable event fields
+      description: Owning organizer only; event must be OPEN. Title, capacity, and start time are required. Omitted description becomes empty.
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/EventInput' } } }
+      responses:
+        '200': { description: Updated event }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/Conflict' }
+  /api/events/{id}/close:
+    parameters: [{ $ref: '#/components/parameters/EventId' }]
+    patch:
+      summary: Close event
+      description: Owning organizer only. Irreversible; repeat close returns 409. Empty JSON body only.
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200': { description: Event ID and CLOSED status }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/Conflict' }
+  /api/events/{id}/book:
+    parameters: [{ $ref: '#/components/parameters/EventId' }]
+    post:
+      summary: Book or rebook event
+      description: User only. Empty JSON body only. A cancelled booking reuses the same booking ID.
+      security: [{ bearerAuth: [] }]
+      responses:
+        '201': { description: New ACTIVE booking }
+        '200': { description: Reactivated booking with rebooked true }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/Conflict' }
+    delete:
+      summary: Cancel own booking
+      description: User only. Cancellation remains possible after event closes or starts.
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200': { description: Booking ID and CANCELLED status }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/Conflict' }
+  /api/bookings/me:
+    get:
+      summary: Get my bookings
+      description: User only. Lists own ACTIVE and CANCELLED bookings.
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200': { description: Array of own bookings }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+  /api/events/{id}/bookings:
+    parameters: [{ $ref: '#/components/parameters/EventId' }]
+    get:
+      summary: List bookings for my event
+      description: Owning organizer only. Includes usernames, not emails or passwords.
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200': { description: Array of event bookings }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }

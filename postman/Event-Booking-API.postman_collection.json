@@ -1,0 +1,1081 @@
+{
+  "info": {
+    "_postman_id": "e9f2176c-73e4-4f19-9bd3-e4d31b0cb001",
+    "name": "Event Booking API Testing - Prepared Suite",
+    "description": "Prepared assets for the current 11-endpoint API. Execution status: Not Run. Start the Main Business Chain at item 01. Organizer A must be provisioned locally.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test(\"Response uses JSON content type\",()=>pm.expect(pm.response.headers.get(\"Content-Type\")||\"\").to.include(\"application/json\"));"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "Main Business Chain - Not Run",
+      "description": "Run sequentially from item 01.",
+      "item": [
+        {
+          "name": "01 Register User A",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const r=Date.now().toString();",
+                  "pm.environment.set(\"runId\",r);",
+                  "pm.environment.set(\"userAUsername\",\"qa_user_a_\"+r);",
+                  "pm.environment.set(\"userAEmail\",\"qa_user_a_\"+r+\"@example.test\");",
+                  "pm.environment.set(\"userBUsername\",\"qa_user_b_\"+r);",
+                  "pm.environment.set(\"userBEmail\",\"qa_user_b_\"+r+\"@example.test\");",
+                  "pm.environment.set(\"futureStartTime\",new Date(Date.now()+7*24*60*60*1000).toISOString());",
+                  "[\"userAToken\",\"userBToken\",\"organizerToken\",\"userAId\",\"userBId\",\"eventId\",\"bookingId\",\"userBBookingId\"].forEach(k=>pm.environment.unset(k));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 201\",function(){pm.response.to.have.status(201);});",
+                  "const json=pm.response.json();",
+                  "pm.test(\"Registered role is user\",()=>pm.expect(json.role).to.eql(\"user\"));",
+                  "pm.test(\"Password is absent\",()=>pm.expect(json).not.to.have.property(\"password\"));",
+                  "if(pm.response.code===201&&json.id)pm.environment.set(\"userAId\",String(json.id));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"username\":\"{{userAUsername}}\",\"email\":\"{{userAEmail}}\",\"password\":\"{{userPassword}}\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/auth/register",
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "TC-AUTH-001. Starts the sequential chain and creates unique run data."
+          }
+        },
+        {
+          "name": "02 Register User B",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 201\",function(){pm.response.to.have.status(201);});",
+                  "const json=pm.response.json();",
+                  "pm.test(\"Registered role is user\",()=>pm.expect(json.role).to.eql(\"user\"));",
+                  "if(pm.response.code===201&&json.id)pm.environment.set(\"userBId\",String(json.id));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"username\":\"{{userBUsername}}\",\"email\":\"{{userBEmail}}\",\"password\":\"{{userPassword}}\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/auth/register",
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Creates User B for capacity checks."
+          }
+        },
+        {
+          "name": "03 Login User A",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\",function(){pm.response.to.have.status(200);});",
+                  "const json=pm.response.json();",
+                  "pm.test(\"User token is returned\",()=>{pm.expect(json.token).to.be.a(\"string\").and.not.empty;pm.expect(json.user.role).to.eql(\"user\");});",
+                  "if(pm.response.code===200&&json.token)pm.environment.set(\"userAToken\",json.token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"{{userAEmail}}\",\"password\":\"{{userPassword}}\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/auth/login",
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "TC-AUTH-009. Extracts userAToken."
+          }
+        },
+        {
+          "name": "04 Login User B",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\",function(){pm.response.to.have.status(200);});",
+                  "const json=pm.response.json();",
+                  "pm.test(\"User token is returned\",()=>pm.expect(json.token).to.be.a(\"string\").and.not.empty);",
+                  "if(pm.response.code===200&&json.token)pm.environment.set(\"userBToken\",json.token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"{{userBEmail}}\",\"password\":\"{{userPassword}}\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/auth/login",
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Extracts userBToken."
+          }
+        },
+        {
+          "name": "05 Login Organizer A",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\",function(){pm.response.to.have.status(200);});",
+                  "const json=pm.response.json();",
+                  "pm.test(\"Organizer token and role are returned\",()=>{pm.expect(json.token).to.be.a(\"string\").and.not.empty;pm.expect(json.user.role).to.eql(\"organizer\");});",
+                  "if(pm.response.code===200&&json.token)pm.environment.set(\"organizerToken\",json.token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"{{organizerEmail}}\",\"password\":\"{{organizerPassword}}\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/auth/login",
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "TC-AUTH-010. Requires locally supplied Organizer credentials."
+          }
+        },
+        {
+          "name": "06 Organizer Creates Capacity-1 Event",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 201\",function(){pm.response.to.have.status(201);});",
+                  "const json=pm.response.json();",
+                  "pm.test(\"Event starts OPEN with capacity 1\",()=>{pm.expect(json.status).to.eql(\"OPEN\");pm.expect(json.capacity).to.eql(1);});",
+                  "if(pm.response.code===201&&json.id)pm.environment.set(\"eventId\",String(json.id));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\":\"Postman booking chain {{runId}}\",\"description\":\"Prepared test data; execution status is determined only when run.\",\"capacity\":1,\"start_time\":\"{{futureStartTime}}\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/events",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{organizerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "TC-EVT-M-001. Extracts eventId."
+          }
+        },
+        {
+          "name": "07 Owner Updates Event",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\",function(){pm.response.to.have.status(200);});",
+                  "const json=pm.response.json();",
+                  "pm.test(\"Updated event remains OPEN\",()=>{pm.expect(json.status).to.eql(\"OPEN\");pm.expect(json.capacity).to.eql(1);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\":\"Postman booking chain updated {{runId}}\",\"description\":\"Updated before booking.\",\"capacity\":1,\"start_time\":\"{{futureStartTime}}\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/events/{{eventId}}",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{organizerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "TC-EVT-M-008."
+          }
+        },
+        {
+          "name": "08 Public Lists Events",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\",function(){pm.response.to.have.status(200);});",
+                  "const json=pm.response.json();",
+                  "pm.test(\"Created event appears\",()=>{pm.expect(json.events).to.be.an(\"array\");pm.expect(json.events.some(e=>String(e.id)===pm.environment.get(\"eventId\"))).to.eql(true);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/events",
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "TC-EVT-Q-001."
+          }
+        },
+        {
+          "name": "09 Public Gets Event Detail",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\",function(){pm.response.to.have.status(200);});",
+                  "const json=pm.response.json();",
+                  "pm.test(\"Detail matches event\",()=>{pm.expect(String(json.id)).to.eql(pm.environment.get(\"eventId\"));pm.expect(json.status).to.eql(\"OPEN\");});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/events/{{eventId}}",
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "TC-EVT-Q-003."
+          }
+        },
+        {
+          "name": "10 User A Books Last Place",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 201\",function(){pm.response.to.have.status(201);});",
+                  "const json=pm.response.json();",
+                  "pm.test(\"New booking is ACTIVE\",()=>{pm.expect(json.status).to.eql(\"ACTIVE\");pm.expect(json.rebooked).to.eql(false);});",
+                  "if(pm.response.code===201&&json.id)pm.environment.set(\"bookingId\",String(json.id));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/events/{{eventId}}/book",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "TC-BKG-001."
+          }
+        },
+        {
+          "name": "11 User A Duplicate Booking Is Rejected",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 409\",function(){pm.response.to.have.status(409);});",
+                  "const json=pm.response.json();",
+                  "pm.test(\"Duplicate conflict\",()=>pm.expect(json.error.code).to.eql(\"ALREADY_BOOKED\"));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/events/{{eventId}}/book",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "TC-BKG-006."
+          }
+        },
+        {
+          "name": "12 User B Is Rejected While Full",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 409\",function(){pm.response.to.have.status(409);});",
+                  "const json=pm.response.json();",
+                  "pm.test(\"Full conflict\",()=>pm.expect(json.error.code).to.eql(\"EVENT_FULL\"));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/events/{{eventId}}/book",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userBToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "TC-BKG-007."
+          }
+        },
+        {
+          "name": "13 User A Views Own Bookings",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\",function(){pm.response.to.have.status(200);});",
+                  "const json=pm.response.json();",
+                  "pm.test(\"Own list contains booking\",()=>{pm.expect(json.bookings).to.be.an(\"array\");pm.expect(json.bookings.some(b=>String(b.id)===pm.environment.get(\"bookingId\"))).to.eql(true);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/bookings/me",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "TC-BKG-018."
+          }
+        },
+        {
+          "name": "14 Owner Views Event Bookings",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\",function(){pm.response.to.have.status(200);});",
+                  "const json=pm.response.json();",
+                  "pm.test(\"List contains booking without password\",()=>{const row=json.bookings.find(b=>String(b.id)===pm.environment.get(\"bookingId\"));pm.expect(row).to.be.an(\"object\");pm.expect(row).not.to.have.property(\"password\");});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/bookings",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{organizerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "TC-BKG-020."
+          }
+        },
+        {
+          "name": "15 User A Cancels",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\",function(){pm.response.to.have.status(200);});",
+                  "const json=pm.response.json();",
+                  "pm.test(\"Booking is CANCELLED\",()=>{pm.expect(String(json.id)).to.eql(pm.environment.get(\"bookingId\"));pm.expect(json.status).to.eql(\"CANCELLED\");});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/book",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "TC-BKG-010."
+          }
+        },
+        {
+          "name": "16 User A Rebooks Same Row",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\",function(){pm.response.to.have.status(200);});",
+                  "const json=pm.response.json();",
+                  "pm.test(\"Rebooking reuses ID\",()=>{pm.expect(json.rebooked).to.eql(true);pm.expect(json.status).to.eql(\"ACTIVE\");pm.expect(String(json.id)).to.eql(pm.environment.get(\"bookingId\"));});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/events/{{eventId}}/book",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "TC-BKG-015."
+          }
+        },
+        {
+          "name": "17 User A Cancels To Release Place",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\",function(){pm.response.to.have.status(200);});",
+                  "pm.test(\"Booking is CANCELLED\",()=>pm.expect(pm.response.json().status).to.eql(\"CANCELLED\"));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/events/{{eventId}}/book",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Prepares TC-BKG-017."
+          }
+        },
+        {
+          "name": "18 User B Takes Released Place",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 201\",function(){pm.response.to.have.status(201);});",
+                  "const json=pm.response.json();",
+                  "pm.test(\"User B receives ACTIVE place\",()=>{pm.expect(json.status).to.eql(\"ACTIVE\");pm.expect(json.rebooked).to.eql(false);});",
+                  "if(pm.response.code===201&&json.id)pm.environment.set(\"userBBookingId\",String(json.id));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/events/{{eventId}}/book",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userBToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "TC-BKG-017."
+          }
+        },
+        {
+          "name": "19 Owner Closes Event",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\",function(){pm.response.to.have.status(200);});",
+                  "pm.test(\"Event is CLOSED\",()=>pm.expect(pm.response.json().status).to.eql(\"CLOSED\"));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/events/{{eventId}}/close",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{organizerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "TC-EVT-M-014."
+          }
+        },
+        {
+          "name": "20 User A Cannot Book CLOSED Event",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 409\",function(){pm.response.to.have.status(409);});",
+                  "pm.test(\"CLOSED conflict\",()=>pm.expect(pm.response.json().error.code).to.eql(\"EVENT_CLOSED\"));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/events/{{eventId}}/book",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "TC-BKG-009."
+          }
+        },
+        {
+          "name": "21 Public Confirms CLOSED Detail",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\",function(){pm.response.to.have.status(200);});",
+                  "pm.test(\"Detail remains public and CLOSED\",()=>pm.expect(pm.response.json().status).to.eql(\"CLOSED\"));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/events/{{eventId}}",
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "TC-EVT-Q-002."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Independent Negative Templates - Not Run",
+      "description": "Run after the main chain.",
+      "item": [
+        {
+          "name": "User Cannot Create Event",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 403\",function(){pm.response.to.have.status(403);});",
+                  "pm.test(\"Expected error code\",()=>pm.expect(pm.response.json().error.code).to.eql(\"FORBIDDEN\"));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\":\"Forbidden create\",\"capacity\":1,\"start_time\":\"{{futureStartTime}}\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/events",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{userAToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "TC-EVT-M-002."
+          }
+        },
+        {
+          "name": "Organizer Cannot Book",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 403\",function(){pm.response.to.have.status(403);});",
+                  "pm.test(\"Expected error code\",()=>pm.expect(pm.response.json().error.code).to.eql(\"FORBIDDEN\"));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/events/{{eventId}}/book",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{organizerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "TC-BKG-003."
+          }
+        },
+        {
+          "name": "Invalid Event ID Is Rejected",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 400\",function(){pm.response.to.have.status(400);});",
+                  "pm.test(\"Expected error code\",()=>pm.expect(pm.response.json().error.code).to.eql(\"INVALID_ID\"));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/events/12abc",
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "TC-EVT-Q-004."
+          }
+        },
+        {
+          "name": "Missing Token Is Rejected",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 401\",function(){pm.response.to.have.status(401);});",
+                  "pm.test(\"Expected error code\",()=>pm.expect(pm.response.json().error.code).to.eql(\"TOKEN_MISSING\"));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/events/{{eventId}}/book",
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "TC-BKG-002."
+          }
+        },
+        {
+          "name": "Repeated Close Is Rejected",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 409\",function(){pm.response.to.have.status(409);});",
+                  "pm.test(\"Expected error code\",()=>pm.expect(pm.response.json().error.code).to.eql(\"EVENT_CLOSED\"));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/api/events/{{eventId}}/close",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{organizerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "TC-EVT-M-017."
+          }
+        }
+      ]
+    }
+  ]
+}

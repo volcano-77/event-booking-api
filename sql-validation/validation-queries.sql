@@ -61,7 +61,7 @@ GROUP BY e.id, e.capacity;
 
 -- B-01: Unique user/event booking row
 -- Expected validation points:
---   * row_count is 0 before first booking and 1 after booking.
+--   * grouped query returns zero rows before first booking and row_count=1 after booking.
 --   * duplicate booking and rebooking never make row_count exceed 1.
 SELECT
   user_id,
@@ -94,8 +94,8 @@ ORDER BY b.id;
 
 SELECT
   e.capacity,
-  SUM(b.status = 'ACTIVE') AS active_bookings,
-  SUM(b.status = 'CANCELLED') AS cancelled_bookings
+  COALESCE(SUM(b.status = 'ACTIVE'), 0) AS active_bookings,
+  COALESCE(SUM(b.status = 'CANCELLED'), 0) AS cancelled_bookings
 FROM events e
 LEFT JOIN bookings b ON b.event_id = e.id
 WHERE e.id = @event_id

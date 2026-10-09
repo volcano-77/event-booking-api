@@ -1,29 +1,19 @@
-# SQL Validation Templates
+# SQL 验证
 
-Status: `Not Run`.
+validation-queries.sql 是只读查询模板（SET 会话变量和 SELECT），包含身份与 bcrypt 特征、活动归属、容量、唯一预约、状态/时间戳、个人数据隔离和外键关系。
 
-These files support API-to-database consistency checks. They contain query templates and expected validation points, not execution output.
+## 手工使用
 
-## Safe use
+1. 连接与 API 相同的专用测试库。
+2. 将本轮 API 返回的 ID 填入开头变量；不要使用其他环境的 ID。
+3. 查询 U-01、E-01/E-02、B-01..B-04、C-01。
+4. 对照 SQL 注释中的预期验证点，保留本轮结果并脱敏。
+5. B-01 首次预约前返回零行；B-02 没有预约时 ACTIVE/CANCELLED 都应为 0。密码只检查前缀/长度，不导出哈希。
 
-1. Connect only to the dedicated test database configured for this project.
-2. Copy `validation-queries.sql` to a local scratch file if you need to fill IDs.
-3. Set `@user_id`, `@event_id`, `@booking_id`, and related variables from the current API run.
-4. Run only the section related to the current test case.
-5. Save sanitized output under `evidence/sql/<run-id>/` only after real execution.
-6. Never save database credentials, full JWTs, or plaintext passwords in evidence.
+## 自动执行
 
-The queries are read-only. Their comments describe the expected validation point. A different result must be checked against test prerequisites and reproduced before it is treated as a defect.
+npm run test:local 会从本轮返回值填 ID 后执行整份模板，保存 13 组实际结果到 sql-templates.json。另外 tests/concurrency-and-db.js 对容量、唯一行、外键、角色、bcrypt、取消重约、回滚和 API/SQL 统计执行断言，并保存查询观察。
 
-## Query map
+mysql2 开启 bigNumberStrings，因此 SQL COUNT 和 BIGINT 观察可能是字符串；比较计数时显式 Number 转换。公开 API 的 active_bookings 则按 OpenAPI 返回整数。日期以 UTC 会话读取，数据库原始 TIMESTAMP 也会受 session.time_zone 影响。
 
-| Query ID | Validation target | Related cases |
-| --- | --- | --- |
-| U-01 | Registered identity, role, and password-hash characteristics | AUTH-001, AUTH-006 |
-| E-01 | Event ownership, status, and saved fields | EVT-M-001, EVT-M-008, EVT-M-014 |
-| E-02 | Capacity compared with ACTIVE booking count | EVT-M-012, EVT-M-013 |
-| B-01 | One booking row per user/event | BKG-001, BKG-006, BKG-015 |
-| B-02 | ACTIVE count and remaining capacity | BKG-007, BKG-010, BKG-017, E2E-002 |
-| B-03 | Cancel/rebook lifecycle and timestamps | BKG-010, BKG-012, BKG-015 |
-| B-04 | User and event booking isolation | BKG-018, BKG-020, BKG-021 |
-| C-01 | Foreign-key relationship integrity | Data consistency review |
+已执行与模板状态分开：报告见 reports/test-summary-2026-10-09.md，模板不填预制结果。不要将这些模板连接到生产数据库，不需要 DROP/DELETE/TRUNCATE。

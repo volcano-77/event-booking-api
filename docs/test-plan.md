@@ -1,139 +1,63 @@
-# API Test Plan
+# 接口测试计划
 
-## 1. Document status
+## 目标与状态
 
-- Plan status: `Pending`
-- Test execution status: `Not Run`
-- Target system: Event Booking API Testing v1.0.0
-- Source of truth: `docs/business-rules.md`, `docs/openapi.yaml`, database schema, and current route implementation
-- This plan defines intended testing work. It contains no execution result, defect conclusion, screenshot, or pass rate.
+目标：验证现有 11 个 REST API 的正常流程、异常处理、参数边界、JWT、角色和对象权限、容量控制、状态流转及数据库一致性。
 
-## 2. Objective
+本计划是设计资产，执行结果按运行编号存档：[实际执行报告](../reports/test-summary-2026-10-09.md)。原 63 条手工用例保留 Not Run，不以自动化结果冒充人工逐条执行。自动化请求、并发场景与原手工用例数量不同，不能相加成“总用例通过率”。
 
-Verify that the 11 REST APIs enforce the documented authentication, role, ownership, validation, booking capacity, and state-transition rules, and that API responses remain consistent with persisted MySQL data.
+## 测试依据
 
-## 3. Scope
+- docs/business-rules.md、docs/api-spec.md、docs/openapi.yaml。
+- src/routes/ 的实际接口、src/validators/index.js 的精确边界、src/middleware/auth.js 的鉴权。
+- src/db/schema.sql 的外键、唯一约束和容量约束。
+- 需求和实现不一致时保存证据，记录缺陷后修复并回归，不通过修改断言隐藏差异。
 
-### In scope
+## 范围与风险
 
-| Module | Endpoints | Main risks |
+| 范围 | 核心风险 | 资产 |
 | --- | --- | --- |
-| Auth | `POST /api/auth/register`, `POST /api/auth/login` | Input validation, duplicate identities, password handling, JWT issuance |
-| Event query | `GET /api/events`, `GET /api/events/:id` | Public access, strict IDs, active booking counts |
-| Event management | `POST /api/events`, `PUT /api/events/:id`, `PATCH /api/events/:id/close` | Organizer role, event ownership, validation, capacity reduction, CLOSED state |
-| User booking | `POST /api/events/:id/book`, `DELETE /api/events/:id/book`, `GET /api/bookings/me` | Duplicate booking, full capacity, cancellation, rebooking, user isolation |
-| Organizer booking view | `GET /api/events/:id/bookings` | Organizer role, object-level authorization, returned data scope |
-| Data validation | `users`, `events`, `bookings` | Foreign keys, unique row per user/event, ACTIVE counts, state persistence |
+| 注册、登录 | 越权选择角色、重复身份、密码边界与泄露、错误凭据 | TC-AUTH；AUTO 注册/登录 |
+| JWT | 缺失、格式错误、签名篡改、过期、算法、主体、伪造角色 | AUTO 鉴权矩阵及隔离签名夹具 |
+| 活动查询 | 公共访问、非法和不存在 ID、OPEN/CLOSED 可见、人数类型与 UTC 时间 | TC-EVT-Q；AUTO 查询与回归 |
+| 活动管理 | User 越权、Organizer 非所有者、参数校验、缩容回滚、关闭 | TC-EVT-M；AUTO；DB-006 |
+| 预约与取消 | 满额、重复、释放、重新预约复用同一行、已开始及 CLOSED | TC-BKG；主业务链；API-STARTED |
+| 数据隔离 | A 无法取消 B；个人列表不含他人；Organizer 只能查自己活动 | AUTO；TC-E2E-003 |
+| 并发 | 多人抢位、同用户重复、缩容竞争、关闭竞争、重复取消 | CONC-001..005 |
+| 数据一致性 | ACTIVE≤capacity、唯一行、外键、密码哈希、回滚与时间戳 | DB-001..007；SQL 模板 |
 
-### Out of scope for this phase
+不包含：UI、支付、邮件、生产部署、正式渗透、压力/长稳/多实例测试及数据库故障注入。有限并发不能证明任意负载下安全。
 
-- UI, browser compatibility, mobile, accessibility, email, password recovery, and payment testing.
-- Load, stress, soak, and formal concurrency execution. The transaction design may later be probed separately.
-- Production deployment, security penetration testing, and third-party integrations.
-- Any claim that an unexecuted case has passed or failed.
+## 方法
 
-## 4. Test basis and traceability
+1. 等价类：合法/非法类型、缺字段、多余字段、无效 Token、角色组合。
+2. 边界：username 2/3/50/51；密码 7/8/72/73 与 UTF-8 字节；title 0/1/120/121；description 0/2000/2001；capacity 0/1/100000/100001；严格 ID 和时间。
+3. 决策组合：OPEN/CLOSED/已开始 × ACTIVE/CANCELLED/未预约 × 容量是否剩余。
+4. 业务链：注册→登录→创建→预约→重复/满额→取消→重约→他人占位→关闭。
+5. 并发：每个场景独立活动、并行发请求、比较允许的串行结果，SQL 验证最终不变量。
+6. 证据：HTTP 状态、错误码、关键字段、数据库快照、真实时间与源码哈希。
 
-| Source | Purpose |
-| --- | --- |
-| `docs/business-rules.md` | Roles, state transitions, capacity and status-code rules |
-| `docs/openapi.yaml` | Endpoint, request, authentication, and response contract |
-| `src/routes/*.routes.js` | Implemented request flow and persistence behavior |
-| `src/middleware/auth.js` | JWT authentication and role authorization |
-| `src/validators/index.js` | Exact field and ID boundaries |
-| `src/db/schema.sql` | Keys, constraints, indexes, and relationships |
-| `test-cases/api-test-cases.md` | Executable manual cases and stable case IDs |
+## 环境与数据
 
-## 5. Test approach
+采用 Node.js、现有 Newman、MySQL 8。test:local 每次从 schema 创建全新独立实例，动态端口且仅回环监听，生成两个 Organizer、公共注册用户和未来活动；不连接已有数据库。已开始活动无法由 API 创建，使用隔离库 INSERT 夹具明确标注。
 
-1. **Contract tests:** method, path, body, headers, status code, and response fields.
-2. **Authentication tests:** missing, malformed, invalid, and expired JWTs.
-3. **Authorization tests:** User versus Organizer and owner versus non-owner.
-4. **Validation tests:** required fields, unknown fields, wrong types, malformed JSON, and strict IDs.
-5. **Boundary tests:** username, password, title, description, capacity, timestamps, and ID limits.
-6. **Workflow tests:** register, login, create, book, cancel, rebook, close, and reject booking after closure.
-7. **Data consistency checks:** compare responses with SQL templates after state-changing requests.
-8. **Automation preparation:** Postman variables, token extraction, dependent IDs, assertions, and Newman runner.
+不执行 DROP/TRUNCATE/SQL DELETE；HTTP DELETE 仅逻辑取消预约。关闭仅限授权的本轮测试活动。停止进程后数据目录保留。密码、JWT secret、Token 仅内存使用，实验室模式的本地环境导出例外（被忽略，含凭据，禁止分享）。
 
-## 6. Test environment
+## 入口、出口和暂停
 
-| Item | Planned value | Status |
-| --- | --- | --- |
-| API base URL | `http://localhost:3000` by default | Pending |
-| Database | Dedicated local MySQL 8 database | Pending |
-| API documentation | `/api/docs` and `docs/openapi.yaml` | Pending |
-| Client | Postman; Newman after manual familiarization | Pending |
-| Timezone | Record local timezone and use ISO 8601 request values with explicit timezone | Pending |
+入口：依赖可用、mysqld 存在、独立实例可启动、三表可建、API 就绪、Organizer 夹具可登录。缺失前置标 Blocked，不填业务 Fail。
 
-Do not use personal or production credentials. Keep `.env`, Postman current values, JWTs, database dumps, and raw password values out of Git.
+出口：选定自动化范围执行结束，失败已检查和复现，脱敏证据齐全，缺陷回归有独立记录，未运行范围与并发限制明确。报告不宣称完整人工覆盖。
 
-## 7. Required test identities and data
+暂停条件：凭据缺失、需要删除已有数据、无法隔离、超出授权范围、服务/数据库启动失败。普通代码或脚本问题自行排查。缺陷修复前后的记录分别保留，不覆盖首轮失败。
 
-| Data | Purpose | Preparation | Status |
-| --- | --- | --- | --- |
-| User A | Primary booking flow | Register through API | Pending |
-| User B | Capacity and data-isolation checks | Register through API | Pending |
-| Organizer A | Creates the primary event | Create using local organizer script | Pending |
-| Organizer B | Non-owner authorization checks | Create using local organizer script | Pending |
-| Event A, capacity 1 | Last-place, cancellation, rebooking, CLOSED flow | Organizer A creates through API | Pending |
-| Event B | Ownership check for Organizer B | Organizer B creates through API | Pending |
+## 执行与交付
 
-Use unique email addresses for each execution. The supplied Postman collection generates unique User A and User B identities; Organizer credentials must be prepared locally before execution.
+执行命令、手工环境及故障排查：[running-tests.md](running-tests.md)。
 
-## 8. Entry criteria
-
-- Application and MySQL configuration are available locally.
-- Database schema has been initialized.
-- API starts and Swagger/OpenAPI can be opened.
-- Organizer A and Organizer B test accounts exist.
-- Postman environment contains local organizer credentials but no shared secrets are committed.
-- Test data can be reset or uniquely generated without affecting unrelated projects.
-
-All entry criteria are currently `Pending` until the tester begins an execution cycle.
-
-## 9. Exit criteria
-
-An execution cycle may be summarized only after:
-
-- Selected case IDs and scope are recorded.
-- Actual responses and relevant database observations are captured.
-- Each executed case receives an evidence-backed outcome.
-- Unexpected behavior is reproduced before a defect report is created.
-- Blocked or skipped cases include a reason.
-- The summary uses the template in `reports/test-summary-template.md`.
-
-No exit criterion is currently claimed as complete.
-
-## 10. Suspension and resumption
-
-Suspend execution if the API cannot start, the test database is unavailable, required Organizer accounts are missing, test data is contaminated, or the documented contract changes during the run. Record the affected case IDs as `Pending` and the reason. Resume only after the environment or contract is stabilized and prerequisites are rechecked.
-
-## 11. Evidence and defect handling
-
-- Store only evidence from real execution under `evidence/`.
-- Name evidence with date, run ID, and case ID where practical.
-- Redact passwords, JWTs, database credentials, and unrelated personal data.
-- Use `bug-reports/bug-report-template.md` only after observed behavior differs reproducibly from the expected result.
-- A failed request that matches the expected negative case is not a defect.
-
-## 12. Deliverables
-
-| Deliverable | Location | Initial status |
-| --- | --- | --- |
-| Test plan | `docs/test-plan.md` | Pending review |
-| Manual API test cases | `test-cases/api-test-cases.md` | Not Run |
-| Postman collection and environment | `postman/` | Not Run |
-| SQL validation templates | `sql-validation/` | Not Run |
-| Evidence guidance | `evidence/README.md` | Pending |
-| Defect template | `bug-reports/` | Pending |
-| Test summary template | `reports/test-summary-template.md` | Pending |
-| Newman runner | `scripts/newman/` | Not Run |
-
-## 13. Risks and assumptions
-
-- Tests that depend on the current time must generate a future timestamp at execution time.
-- Reusing fixed emails can cause duplicate-registration conflicts; use a unique run ID.
-- Postman and SQL checks can observe different databases if environment configuration is inconsistent.
-- Newman execution requires local Organizer credentials supplied at runtime.
-- Formal concurrent last-place testing remains separate from this sequential collection.
-- Test cases reflect the current implementation and documented first-version rules; contract changes require traceability review.
+- 手工目录：test-cases/api-test-cases.md。
+- 扩展自动化：test-cases/automated-cases.md（从 Collection 构建脚本生成）。
+- 并发与 SQL：test-cases/concurrency-and-db.md。
+- 证据：evidence/runs/，每轮 manifest 区分源码版本和未提交改动。
+- 缺陷：bug-reports/，仅记录真实复现的问题。
+- 报告：reports/，模板与实际报告分开。

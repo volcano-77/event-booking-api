@@ -1,33 +1,9 @@
-# Planned testing scope
+# 测试范围
 
-This is a scope draft. It contains no execution results.
+当前计划见 [test-plan.md](test-plan.md)，实际运行方式见 [running-tests.md](running-tests.md)，真实执行记录见 [2026-10-09 报告](../reports/test-summary-2026-10-09.md)。
 
-## Auth
-
-- Register: required fields, email format, username and password boundaries, duplicate identity, supplied role rejection.
-- Login: correct and incorrect credentials, missing fields, wrong types.
-- Token: missing, malformed, modified, and expired JWT; role-specific authorization.
-
-## Event
-
-- Query: public list and detail, malformed and nonexistent IDs.
-- Create: organizer role, required fields, value boundaries, future timestamp.
-- Modify: owning organizer, other organizer, user; capacity below active count.
-- Close: owner, other organizer, repeated close, booking after close.
-
-## Booking
-
-- Normal booking, last place and full event, duplicate active booking, started or CLOSED event.
-- Cancel, repeated cancel, release of capacity, rebooking after cancellation.
-- Personal list and organizer event list; isolation of another user's or organizer's data.
-
-## Data consistency
-
-- Compare event capacity with active booking rows after booking, cancellation, and rebooking.
-- Check unique user/event row, statuses, timestamps, and transaction behavior after rejected requests.
-
-## Prepared tools and future execution
-
-- Postman environment variables, dynamic IDs and tokens, assertion scaffolding, and a dependency-aware business chain are prepared under `postman/`; execution status is `Not Run`.
-- A local Newman runner is prepared under `scripts/newman/`; execution and evidence review remain `Pending`.
-- JMeter or another concurrent client may later probe last-place booking behavior. No concurrency result is claimed.
+- 功能：现有 11 个 API 的正常、异常、参数、边界、鉴权、角色、资源归属、预约状态和业务冲突。
+- 自动化：原业务链与负向请求，扩展身份/权限矩阵和边界请求；独立实例中的有限并发、只读 SQL 一致性验证。
+- 手工：保留 63 条原用例，尚未逐条人工执行。自动化结果按实际请求与断言记录。
+- 不在已验证范围：UI、邮件、支付、生产部署、压力与长稳、多实例竞争、数据库故障注入、完整安全渗透。
+- 不以默认绿色状态代替执行证据；不存在凭空生成的截图或真实用户数据。

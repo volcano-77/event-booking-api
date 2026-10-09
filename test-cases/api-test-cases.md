@@ -2,9 +2,9 @@
 
 ## Document status
 
-- Design status: `Pending review`
-- Execution status for every case: `Not Run`
-- No case in this document has been executed by this test-design activity.
+- Design status: maintained manual catalog
+- Manual execution status for every case: `Not Run`
+- This catalog has not been executed case-by-case by a human. Related automated scenarios have real results in `reports/test-summary-2026-10-09.md`; do not infer all variants here passed.
 - Source: current business rules, OpenAPI, validators, route implementation, and database schema.
 
 ## Execution conventions
@@ -120,9 +120,9 @@
 | Boundary values | AUTH-004/007, EVT-M-004 through EVT-M-007/013 |
 | Critical business chains | E2E-001 through E2E-003 |
 
-## Clarifications to record before execution
+## Execution notes
 
-- Confirm the exact local Organizer test accounts and how their credentials will be supplied to Postman without committing secrets.
-- Confirm whether test evidence should be committed after redaction or retained locally only.
-- Confirm the selected database reset or unique-data strategy for repeated manual runs.
-- Concurrency execution remains `Pending` and requires a separate workload design; it is not part of this sequential case set.
+- `npm run test:lab` provisions two local Organizers in a fresh isolated instance; its environment export stays under ignored `.runtime/`.
+- Actual redacted automation evidence is preserved in `evidence/runs/`; no commit is automatic.
+- Repeated runs use fresh data directories and unique identities, not destructive database resets.
+- Bounded concurrency and SQL cases are in `concurrency-and-db.md`; their actual results are separate from this manual catalog.

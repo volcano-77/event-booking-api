@@ -1,0 +1,140 @@
+{
+  "case": "DELETE ignores supplied user_id and uses authenticated identity",
+  "startedAt": "2026-10-09T13:43:17.902Z",
+  "status": "Pass",
+  "steps": [
+    {
+      "method": "POST",
+      "path": "/api/auth/login",
+      "status": 200,
+      "response": {
+        "token": "[REDACTED]",
+        "token_type": "[REDACTED]",
+        "user": {
+          "id": "1",
+          "username": "organizer_a",
+          "email": "organizer_a@example.test",
+          "role": "organizer"
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/register",
+      "status": 201,
+      "response": {
+        "id": "12",
+        "username": "audit_a_1791553399101",
+        "email": "audit_a_1791553399101@example.test",
+        "role": "user"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/login",
+      "status": 200,
+      "response": {
+        "token": "[REDACTED]",
+        "token_type": "[REDACTED]",
+        "user": {
+          "id": "12",
+          "username": "audit_a_1791553399101",
+          "email": "audit_a_1791553399101@example.test",
+          "role": "user"
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/register",
+      "status": 201,
+      "response": {
+        "id": "13",
+        "username": "audit_b_1791553399101",
+        "email": "audit_b_1791553399101@example.test",
+        "role": "user"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/auth/login",
+      "status": 200,
+      "response": {
+        "token": "[REDACTED]",
+        "token_type": "[REDACTED]",
+        "user": {
+          "id": "13",
+          "username": "audit_b_1791553399101",
+          "email": "audit_b_1791553399101@example.test",
+          "role": "user"
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/events",
+      "status": 201,
+      "response": {
+        "id": "7",
+        "title": "DELETE identity acceptance",
+        "description": "",
+        "capacity": 1,
+        "start_time": "2026-10-10T13:43:20.103Z",
+        "status": "OPEN",
+        "organizer_id": "1"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/events/7/book",
+      "status": 201,
+      "response": {
+        "id": "7",
+        "event_id": "7",
+        "user_id": "12",
+        "status": "ACTIVE",
+        "rebooked": false
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/events/7/book",
+      "status": 404,
+      "response": {
+        "error": {
+          "code": "BOOKING_NOT_FOUND",
+          "message": "Your booking was not found"
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/bookings/me",
+      "status": 200,
+      "response": {
+        "bookings": [
+          {
+            "id": "7",
+            "event_id": "7",
+            "title": "DELETE identity acceptance",
+            "status": "ACTIVE",
+            "created_at": "2026-10-09T13:43:20.113Z",
+            "updated_at": "2026-10-09T13:43:20.113Z"
+          }
+        ]
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/events/7/book",
+      "status": 200,
+      "response": {
+        "id": "7",
+        "event_id": "7",
+        "user_id": "12",
+        "status": "CANCELLED"
+      }
+    }
+  ],
+  "endedAt": "2026-10-09T13:43:20.135Z"
+}

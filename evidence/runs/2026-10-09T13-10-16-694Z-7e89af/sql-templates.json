@@ -1,0 +1,168 @@
+{
+  "description": "Actual read-only template observations; DB assertions are in concurrency-db.json",
+  "ids": {
+    "user_id": "3",
+    "other_user_id": "4",
+    "organizer_id": "1",
+    "other_organizer_id": "2",
+    "event_id": "1",
+    "other_event_id": "2",
+    "booking_id": "1"
+  },
+  "results": [
+    [
+      {
+        "id": "3",
+        "username": "qa_user_a_1791551426095",
+        "email": "qa_user_a_1791551426095@example.test",
+        "role": "user",
+        "created_at": "2026-10-09T21:10:26.395Z",
+        "has_bcrypt_prefix": "1",
+        "stored_password_length": "60"
+      }
+    ],
+    [
+      {
+        "id": "1",
+        "title": "Postman booking chain updated 1791551426095",
+        "description": "Updated before booking.",
+        "capacity": 1,
+        "status": "CLOSED",
+        "organizer_id": "1",
+        "organizer_username": "organizer_a",
+        "start_time": "2026-10-16T13:10:26.095Z",
+        "created_at": "2026-10-09T21:10:27.852Z"
+      }
+    ],
+    [
+      {
+        "event_id": "1",
+        "capacity": 1,
+        "active_bookings": "0",
+        "remaining_capacity": "1",
+        "within_capacity": "1"
+      }
+    ],
+    [
+      {
+        "user_id": "3",
+        "event_id": "1",
+        "row_count": "1",
+        "booking_id": "1",
+        "current_status": "CANCELLED"
+      }
+    ],
+    [
+      {
+        "id": "1",
+        "user_id": "3",
+        "username": "qa_user_a_1791551426095",
+        "event_id": "1",
+        "status": "CANCELLED",
+        "created_at": "2026-10-09T21:10:28.272Z",
+        "updated_at": "2026-10-09T21:10:28.900Z"
+      },
+      {
+        "id": "2",
+        "user_id": "4",
+        "username": "qa_user_b_1791551426095",
+        "event_id": "1",
+        "status": "CANCELLED",
+        "created_at": "2026-10-09T21:10:28.978Z",
+        "updated_at": "2026-10-09T21:10:41.392Z"
+      }
+    ],
+    [
+      {
+        "capacity": 1,
+        "active_bookings": "0",
+        "cancelled_bookings": "2"
+      }
+    ],
+    [
+      {
+        "id": "1",
+        "user_id": "3",
+        "event_id": "1",
+        "status": "CANCELLED",
+        "created_at": "2026-10-09T21:10:28.272Z",
+        "updated_at": "2026-10-09T21:10:28.900Z"
+      }
+    ],
+    [
+      {
+        "id": "1",
+        "user_id": "3",
+        "event_id": "1",
+        "status": "CANCELLED",
+        "created_at": "2026-10-09T21:10:28.272Z",
+        "updated_at": "2026-10-09T21:10:28.900Z"
+      },
+      {
+        "id": "2",
+        "user_id": "4",
+        "event_id": "1",
+        "status": "CANCELLED",
+        "created_at": "2026-10-09T21:10:28.978Z",
+        "updated_at": "2026-10-09T21:10:41.392Z"
+      }
+    ],
+    [
+      {
+        "id": "39",
+        "user_id": "3",
+        "event_id": "24",
+        "status": "CANCELLED",
+        "created_at": "2026-10-09T21:10:49.822Z",
+        "updated_at": "2026-10-09T21:10:49.830Z"
+      },
+      {
+        "id": "36",
+        "user_id": "3",
+        "event_id": "22",
+        "status": "ACTIVE",
+        "created_at": "2026-10-09T21:10:49.770Z",
+        "updated_at": "2026-10-09T21:10:49.787Z"
+      },
+      {
+        "id": "5",
+        "user_id": "3",
+        "event_id": "6",
+        "status": "CANCELLED",
+        "created_at": "2026-10-09T21:10:41.578Z",
+        "updated_at": "2026-10-09T21:10:41.672Z"
+      },
+      {
+        "id": "3",
+        "user_id": "3",
+        "event_id": "2",
+        "status": "CANCELLED",
+        "created_at": "2026-10-09T21:10:40.480Z",
+        "updated_at": "2026-10-09T21:10:41.020Z"
+      },
+      {
+        "id": "1",
+        "user_id": "3",
+        "event_id": "1",
+        "status": "CANCELLED",
+        "created_at": "2026-10-09T21:10:28.272Z",
+        "updated_at": "2026-10-09T21:10:28.900Z"
+      }
+    ],
+    [],
+    [],
+    [],
+    [
+      {
+        "id": "1",
+        "organizer_id": "1",
+        "status": "CLOSED"
+      },
+      {
+        "id": "2",
+        "organizer_id": "1",
+        "status": "OPEN"
+      }
+    ]
+  ]
+}

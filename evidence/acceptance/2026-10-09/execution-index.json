@@ -1,0 +1,101 @@
+{
+  "reviewedAt": "2026-10-09T13:45:31.620Z",
+  "type": "Same-machine clean Git candidate checkout; not another physical computer",
+  "initialCandidateFileCount": 65,
+  "collectionRegenerationChanges": [],
+  "runs": [
+    {
+      "runId": "2026-10-09T13-38-50-550Z-38f1e3",
+      "command": "$env:EVENT_BOOKING_ALLOW_TEST_WRITES=\"YES\"; npm run test:local",
+      "startedAt": "2026-10-09T13:38:50.558Z",
+      "endedAt": "2026-10-09T13:39:23.202Z",
+      "status": "Pass",
+      "requests": 143,
+      "assertions": {
+        "total": 418,
+        "pending": 0,
+        "failed": 0
+      },
+      "notRun": [],
+      "safety": {
+        "noExistingDatabaseUsed": true,
+        "noDropTruncateOrDelete": true,
+        "closeAuthorized": true,
+        "dataRetained": true,
+        "isolatedMysqlStopped": true,
+        "apiStopped": true
+      }
+    },
+    {
+      "runId": "2026-10-09T13-40-36-006Z-e8832c",
+      "command": "$env:EVENT_BOOKING_ALLOW_TEST_WRITES=\"YES\"; npm run test:local",
+      "startedAt": "2026-10-09T13:40:36.012Z",
+      "endedAt": "2026-10-09T13:41:06.969Z",
+      "status": "Pass",
+      "requests": 143,
+      "assertions": {
+        "total": 418,
+        "pending": 0,
+        "failed": 0
+      },
+      "notRun": [],
+      "safety": {
+        "noExistingDatabaseUsed": true,
+        "noDropTruncateOrDelete": true,
+        "closeAuthorized": true,
+        "dataRetained": true,
+        "isolatedMysqlStopped": true,
+        "apiStopped": true
+      }
+    },
+    {
+      "runId": "2026-10-09T13-41-13-430Z-e99b5c",
+      "command": "$env:EVENT_BOOKING_ALLOW_TEST_WRITES=\"YES\"; npm run test:local -- --probe",
+      "startedAt": "2026-10-09T13:41:13.439Z",
+      "endedAt": "2026-10-09T13:41:21.382Z",
+      "status": "Pass",
+      "safety": {
+        "noExistingDatabaseUsed": true,
+        "noDropTruncateOrDelete": true,
+        "closeAuthorized": true,
+        "dataRetained": true,
+        "isolatedMysqlStopped": true,
+        "apiStopped": true
+      }
+    },
+    {
+      "runId": "2026-10-09T13-41-55-339Z-f023c8",
+      "command": "$env:EVENT_BOOKING_ALLOW_TEST_WRITES=\"YES\"; npm run test:lab",
+      "startedAt": "2026-10-09T13:41:55.347Z",
+      "endedAt": "2026-10-09T13:43:27.761Z",
+      "status": "Not Run",
+      "safety": {
+        "noExistingDatabaseUsed": true,
+        "noDropTruncateOrDelete": true,
+        "closeAuthorized": true,
+        "dataRetained": true,
+        "isolatedMysqlStopped": true,
+        "apiStopped": true
+      }
+    }
+  ],
+  "standalone": {
+    "command": "npm run test:api",
+    "exitCode": 0,
+    "startedAt": "2026-10-09T13:42:33.080Z",
+    "endedAt": "2026-10-09T13:42:49.433Z",
+    "requests": 139,
+    "assertions": {
+      "total": 406,
+      "pending": 0,
+      "failed": 0
+    },
+    "notRun": [
+      "AUTO-022 Expired signed JWT",
+      "AUTO-023 Disallowed algorithm",
+      "AUTO-024 Token subject not in database",
+      "AUTO-025 Forged role claim cannot grant Organizer"
+    ]
+  },
+  "labInterruptExitCode": 1
+}

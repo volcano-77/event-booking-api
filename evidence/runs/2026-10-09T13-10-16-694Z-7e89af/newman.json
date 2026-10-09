@@ -1,0 +1,4810 @@
+{
+  "tool": "Newman 6.2.2",
+  "startedAt": "2026-10-09T13:10:25.869Z",
+  "endedAt": "2026-10-09T13:10:42.371Z",
+  "requests": 141,
+  "assertions": {
+    "total": 412,
+    "pending": 0,
+    "failed": 1
+  },
+  "failures": [
+    {
+      "source": "AUTO-113 Public detail contract count",
+      "name": "AssertionError",
+      "message": "expected '1' to be a number"
+    }
+  ],
+  "notRun": [],
+  "executions": [
+    {
+      "name": "01 Register User A",
+      "source": "TC-AUTH-001. Starts the sequential chain and creates unique run data.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/register",
+        "body": {
+          "username": "qa_user_a_1791551426095",
+          "email": "qa_user_a_1791551426095@example.test",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 201,
+      "response": {
+        "id": "3",
+        "username": "qa_user_a_1791551426095",
+        "email": "qa_user_a_1791551426095@example.test",
+        "role": "user"
+      },
+      "durationMs": 290,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 201",
+          "status": "Pass"
+        },
+        {
+          "name": "Registered role is user",
+          "status": "Pass"
+        },
+        {
+          "name": "Password is absent",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "02 Register User B",
+      "source": "Creates User B for capacity checks.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/register",
+        "body": {
+          "username": "qa_user_b_1791551426095",
+          "email": "qa_user_b_1791551426095@example.test",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 201,
+      "response": {
+        "id": "4",
+        "username": "qa_user_b_1791551426095",
+        "email": "qa_user_b_1791551426095@example.test",
+        "role": "user"
+      },
+      "durationMs": 273,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 201",
+          "status": "Pass"
+        },
+        {
+          "name": "Registered role is user",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "03 Login User A",
+      "source": "TC-AUTH-009. Extracts userAToken.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/login",
+        "body": {
+          "email": "qa_user_a_1791551426095@example.test",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 200,
+      "response": {
+        "token": "[REDACTED]",
+        "token_type": "[REDACTED]",
+        "user": {
+          "id": "3",
+          "username": "qa_user_a_1791551426095",
+          "email": "qa_user_a_1791551426095@example.test",
+          "role": "user"
+        }
+      },
+      "durationMs": 265,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 200",
+          "status": "Pass"
+        },
+        {
+          "name": "User token is returned",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "04 Login User B",
+      "source": "Extracts userBToken.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/login",
+        "body": {
+          "email": "qa_user_b_1791551426095@example.test",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 200,
+      "response": {
+        "token": "[REDACTED]",
+        "token_type": "[REDACTED]",
+        "user": {
+          "id": "4",
+          "username": "qa_user_b_1791551426095",
+          "email": "qa_user_b_1791551426095@example.test",
+          "role": "user"
+        }
+      },
+      "durationMs": 248,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 200",
+          "status": "Pass"
+        },
+        {
+          "name": "User token is returned",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "05 Login Organizer A",
+      "source": "TC-AUTH-010. Requires locally supplied Organizer credentials.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/login",
+        "body": {
+          "email": "organizer_a@example.test",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 200,
+      "response": {
+        "token": "[REDACTED]",
+        "token_type": "[REDACTED]",
+        "user": {
+          "id": "1",
+          "username": "organizer_a",
+          "email": "organizer_a@example.test",
+          "role": "organizer"
+        }
+      },
+      "durationMs": 249,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 200",
+          "status": "Pass"
+        },
+        {
+          "name": "Organizer token and role are returned",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "06 Organizer Creates Capacity-1 Event",
+      "source": "TC-EVT-M-001. Extracts eventId.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "Postman booking chain 1791551426095",
+          "description": "Prepared test data; execution status is determined only when run.",
+          "capacity": 1,
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 201,
+      "response": {
+        "id": "1",
+        "title": "Postman booking chain 1791551426095",
+        "description": "Prepared test data; execution status is determined only when run.",
+        "capacity": 1,
+        "start_time": "2026-10-16T13:10:26.095Z",
+        "status": "OPEN",
+        "organizer_id": "1"
+      },
+      "durationMs": 44,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 201",
+          "status": "Pass"
+        },
+        {
+          "name": "Event starts OPEN with capacity 1",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "07 Owner Updates Event",
+      "source": "TC-EVT-M-008.",
+      "request": {
+        "method": "PUT",
+        "url": "http://127.0.0.1:11148/api/events/1",
+        "body": {
+          "title": "Postman booking chain updated 1791551426095",
+          "description": "Updated before booking.",
+          "capacity": 1,
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 200,
+      "response": {
+        "id": "1",
+        "title": "Postman booking chain updated 1791551426095",
+        "description": "Updated before booking.",
+        "capacity": 1,
+        "start_time": "2026-10-16T13:10:26.095Z",
+        "status": "OPEN",
+        "organizer_id": "1"
+      },
+      "durationMs": 16,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 200",
+          "status": "Pass"
+        },
+        {
+          "name": "Updated event remains OPEN",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "08 Public Lists Events",
+      "source": "TC-EVT-Q-001.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/events"
+      },
+      "actualStatus": 200,
+      "response": {
+        "events": [
+          {
+            "id": "1",
+            "title": "Postman booking chain updated 1791551426095",
+            "description": "Updated before booking.",
+            "capacity": 1,
+            "status": "OPEN",
+            "organizer_id": "1",
+            "start_time": "2026-10-16T13:10:26.095Z",
+            "created_at": "2026-10-09T21:10:27.852Z",
+            "active_bookings": "0"
+          }
+        ]
+      },
+      "durationMs": 11,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 200",
+          "status": "Pass"
+        },
+        {
+          "name": "Created event appears",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "09 Public Gets Event Detail",
+      "source": "TC-EVT-Q-003.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/events/1"
+      },
+      "actualStatus": 200,
+      "response": {
+        "id": "1",
+        "title": "Postman booking chain updated 1791551426095",
+        "description": "Updated before booking.",
+        "capacity": 1,
+        "status": "OPEN",
+        "organizer_id": "1",
+        "start_time": "2026-10-16T13:10:26.095Z",
+        "created_at": "2026-10-09T21:10:27.852Z",
+        "active_bookings": "0"
+      },
+      "durationMs": 7,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 200",
+          "status": "Pass"
+        },
+        {
+          "name": "Detail matches event",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "10 User A Books Last Place",
+      "source": "TC-BKG-001.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events/1/book",
+        "body": {}
+      },
+      "actualStatus": 201,
+      "response": {
+        "id": "1",
+        "event_id": "1",
+        "user_id": "3",
+        "status": "ACTIVE",
+        "rebooked": false
+      },
+      "durationMs": 21,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 201",
+          "status": "Pass"
+        },
+        {
+          "name": "New booking is ACTIVE",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "11 User A Duplicate Booking Is Rejected",
+      "source": "TC-BKG-006.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events/1/book",
+        "body": {}
+      },
+      "actualStatus": 409,
+      "response": {
+        "error": {
+          "code": "ALREADY_BOOKED",
+          "message": "An active booking already exists"
+        }
+      },
+      "durationMs": 10,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 409",
+          "status": "Pass"
+        },
+        {
+          "name": "Duplicate conflict",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "12 User B Is Rejected While Full",
+      "source": "TC-BKG-007.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events/1/book",
+        "body": {}
+      },
+      "actualStatus": 409,
+      "response": {
+        "error": {
+          "code": "EVENT_FULL",
+          "message": "Event is full"
+        }
+      },
+      "durationMs": 10,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 409",
+          "status": "Pass"
+        },
+        {
+          "name": "Full conflict",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "13 User A Views Own Bookings",
+      "source": "TC-BKG-018.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/bookings/me"
+      },
+      "actualStatus": 200,
+      "response": {
+        "bookings": [
+          {
+            "id": "1",
+            "event_id": "1",
+            "title": "Postman booking chain updated 1791551426095",
+            "status": "ACTIVE",
+            "created_at": "2026-10-09T21:10:28.272Z",
+            "updated_at": "2026-10-09T21:10:28.272Z"
+          }
+        ]
+      },
+      "durationMs": 4,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 200",
+          "status": "Pass"
+        },
+        {
+          "name": "Own list contains booking",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "14 Owner Views Event Bookings",
+      "source": "TC-BKG-020.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/events/1/bookings"
+      },
+      "actualStatus": 200,
+      "response": {
+        "bookings": [
+          {
+            "id": "1",
+            "event_id": "1",
+            "user_id": "3",
+            "username": "qa_user_a_1791551426095",
+            "status": "ACTIVE",
+            "created_at": "2026-10-09T21:10:28.272Z",
+            "updated_at": "2026-10-09T21:10:28.272Z"
+          }
+        ]
+      },
+      "durationMs": 7,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 200",
+          "status": "Pass"
+        },
+        {
+          "name": "List contains booking without password",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "15 User A Cancels",
+      "source": "TC-BKG-010.",
+      "request": {
+        "method": "DELETE",
+        "url": "http://127.0.0.1:11148/api/events/1/book"
+      },
+      "actualStatus": 200,
+      "response": {
+        "id": "1",
+        "event_id": "1",
+        "user_id": "3",
+        "status": "CANCELLED"
+      },
+      "durationMs": 13,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 200",
+          "status": "Pass"
+        },
+        {
+          "name": "Booking is CANCELLED",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "16 User A Rebooks Same Row",
+      "source": "TC-BKG-015.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events/1/book",
+        "body": {}
+      },
+      "actualStatus": 200,
+      "response": {
+        "id": "1",
+        "event_id": "1",
+        "user_id": "3",
+        "status": "ACTIVE",
+        "rebooked": true
+      },
+      "durationMs": 13,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 200",
+          "status": "Pass"
+        },
+        {
+          "name": "Rebooking reuses ID",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "17 User A Cancels To Release Place",
+      "source": "Prepares TC-BKG-017.",
+      "request": {
+        "method": "DELETE",
+        "url": "http://127.0.0.1:11148/api/events/1/book"
+      },
+      "actualStatus": 200,
+      "response": {
+        "id": "1",
+        "event_id": "1",
+        "user_id": "3",
+        "status": "CANCELLED"
+      },
+      "durationMs": 13,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 200",
+          "status": "Pass"
+        },
+        {
+          "name": "Booking is CANCELLED",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "18 User B Takes Released Place",
+      "source": "TC-BKG-017.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events/1/book",
+        "body": {}
+      },
+      "actualStatus": 201,
+      "response": {
+        "id": "2",
+        "event_id": "1",
+        "user_id": "4",
+        "status": "ACTIVE",
+        "rebooked": false
+      },
+      "durationMs": 11,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 201",
+          "status": "Pass"
+        },
+        {
+          "name": "User B receives ACTIVE place",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "19 Owner Closes Event",
+      "source": "TC-EVT-M-014.",
+      "request": {
+        "method": "PATCH",
+        "url": "http://127.0.0.1:11148/api/events/1/close",
+        "body": {}
+      },
+      "actualStatus": 200,
+      "response": {
+        "id": "1",
+        "status": "CLOSED"
+      },
+      "durationMs": 12,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 200",
+          "status": "Pass"
+        },
+        {
+          "name": "Event is CLOSED",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "20 User A Cannot Book CLOSED Event",
+      "source": "TC-BKG-009.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events/1/book",
+        "body": {}
+      },
+      "actualStatus": 409,
+      "response": {
+        "error": {
+          "code": "EVENT_CLOSED",
+          "message": "Closed events cannot be booked"
+        }
+      },
+      "durationMs": 7,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 409",
+          "status": "Pass"
+        },
+        {
+          "name": "CLOSED conflict",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "21 Public Confirms CLOSED Detail",
+      "source": "TC-EVT-Q-002.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/events/1"
+      },
+      "actualStatus": 200,
+      "response": {
+        "id": "1",
+        "title": "Postman booking chain updated 1791551426095",
+        "description": "Updated before booking.",
+        "capacity": 1,
+        "status": "CLOSED",
+        "organizer_id": "1",
+        "start_time": "2026-10-16T13:10:26.095Z",
+        "created_at": "2026-10-09T21:10:27.852Z",
+        "active_bookings": "1"
+      },
+      "durationMs": 5,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 200",
+          "status": "Pass"
+        },
+        {
+          "name": "Detail remains public and CLOSED",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "User Cannot Create Event",
+      "source": "TC-EVT-M-002.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "Forbidden create",
+          "capacity": 1,
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 403,
+      "response": {
+        "error": {
+          "code": "FORBIDDEN",
+          "message": "Requires organizer role"
+        }
+      },
+      "durationMs": 5,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 403",
+          "status": "Pass"
+        },
+        {
+          "name": "Expected error code",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "Organizer Cannot Book",
+      "source": "TC-BKG-003.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events/1/book",
+        "body": {}
+      },
+      "actualStatus": 403,
+      "response": {
+        "error": {
+          "code": "FORBIDDEN",
+          "message": "Requires user role"
+        }
+      },
+      "durationMs": 3,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 403",
+          "status": "Pass"
+        },
+        {
+          "name": "Expected error code",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "Invalid Event ID Is Rejected",
+      "source": "TC-EVT-Q-004.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/events/12abc"
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_ID",
+          "message": "ID must be a positive decimal integer"
+        }
+      },
+      "durationMs": 2,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Expected error code",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "Missing Token Is Rejected",
+      "source": "TC-BKG-002.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events/1/book",
+        "body": {}
+      },
+      "actualStatus": 401,
+      "response": {
+        "error": {
+          "code": "TOKEN_MISSING",
+          "message": "Bearer token is required"
+        }
+      },
+      "durationMs": 4,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 401",
+          "status": "Pass"
+        },
+        {
+          "name": "Expected error code",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "Repeated Close Is Rejected",
+      "source": "TC-EVT-M-017.",
+      "request": {
+        "method": "PATCH",
+        "url": "http://127.0.0.1:11148/api/events/1/close",
+        "body": {}
+      },
+      "actualStatus": 409,
+      "response": {
+        "error": {
+          "code": "EVENT_CLOSED",
+          "message": "Event is already closed"
+        }
+      },
+      "durationMs": 7,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 409",
+          "status": "Pass"
+        },
+        {
+          "name": "Expected error code",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-001 Login Organizer B",
+      "source": "AUTO-001. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/login",
+        "body": {
+          "email": "organizer_b@example.test",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 200,
+      "response": {
+        "token": "[REDACTED]",
+        "token_type": "[REDACTED]",
+        "user": {
+          "id": "2",
+          "username": "organizer_b",
+          "email": "organizer_b@example.test",
+          "role": "organizer"
+        }
+      },
+      "durationMs": 247,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 200",
+          "status": "Pass"
+        },
+        {
+          "name": "Organizer role",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-002 Create open fixture",
+      "source": "AUTO-002. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "Extended test event",
+          "description": "",
+          "capacity": 2,
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 201,
+      "response": {
+        "id": "2",
+        "title": "Extended test event",
+        "description": "",
+        "capacity": 2,
+        "start_time": "2026-10-16T13:10:26.095Z",
+        "status": "OPEN",
+        "organizer_id": "1"
+      },
+      "durationMs": 11,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 201",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-003 Missing JWT POST /api/events",
+      "source": "AUTO-003. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "Extended test event",
+          "description": "",
+          "capacity": 2,
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 401,
+      "response": {
+        "error": {
+          "code": "TOKEN_MISSING",
+          "message": "Bearer token is required"
+        }
+      },
+      "durationMs": 3,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 401",
+          "status": "Pass"
+        },
+        {
+          "name": "Error TOKEN_MISSING",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-004 Wrong role POST /api/events",
+      "source": "AUTO-004. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "Extended test event",
+          "description": "",
+          "capacity": 2,
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 403,
+      "response": {
+        "error": {
+          "code": "FORBIDDEN",
+          "message": "Requires organizer role"
+        }
+      },
+      "durationMs": 5,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 403",
+          "status": "Pass"
+        },
+        {
+          "name": "Error FORBIDDEN",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-005 Missing JWT PUT /api/events/{{extendedEventId}}",
+      "source": "AUTO-005. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "PUT",
+        "url": "http://127.0.0.1:11148/api/events/2",
+        "body": {
+          "title": "Extended test event",
+          "description": "",
+          "capacity": 2,
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 401,
+      "response": {
+        "error": {
+          "code": "TOKEN_MISSING",
+          "message": "Bearer token is required"
+        }
+      },
+      "durationMs": 2,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 401",
+          "status": "Pass"
+        },
+        {
+          "name": "Error TOKEN_MISSING",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-006 Wrong role PUT /api/events/{{extendedEventId}}",
+      "source": "AUTO-006. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "PUT",
+        "url": "http://127.0.0.1:11148/api/events/2",
+        "body": {
+          "title": "Extended test event",
+          "description": "",
+          "capacity": 2,
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 403,
+      "response": {
+        "error": {
+          "code": "FORBIDDEN",
+          "message": "Requires organizer role"
+        }
+      },
+      "durationMs": 5,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 403",
+          "status": "Pass"
+        },
+        {
+          "name": "Error FORBIDDEN",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-007 Missing JWT PATCH /api/events/{{extendedEventId}}/close",
+      "source": "AUTO-007. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "PATCH",
+        "url": "http://127.0.0.1:11148/api/events/2/close",
+        "body": {}
+      },
+      "actualStatus": 401,
+      "response": {
+        "error": {
+          "code": "TOKEN_MISSING",
+          "message": "Bearer token is required"
+        }
+      },
+      "durationMs": 3,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 401",
+          "status": "Pass"
+        },
+        {
+          "name": "Error TOKEN_MISSING",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-008 Wrong role PATCH /api/events/{{extendedEventId}}/close",
+      "source": "AUTO-008. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "PATCH",
+        "url": "http://127.0.0.1:11148/api/events/2/close",
+        "body": {}
+      },
+      "actualStatus": 403,
+      "response": {
+        "error": {
+          "code": "FORBIDDEN",
+          "message": "Requires organizer role"
+        }
+      },
+      "durationMs": 5,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 403",
+          "status": "Pass"
+        },
+        {
+          "name": "Error FORBIDDEN",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-009 Missing JWT POST /api/events/{{extendedEventId}}/book",
+      "source": "AUTO-009. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events/2/book",
+        "body": {}
+      },
+      "actualStatus": 401,
+      "response": {
+        "error": {
+          "code": "TOKEN_MISSING",
+          "message": "Bearer token is required"
+        }
+      },
+      "durationMs": 4,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 401",
+          "status": "Pass"
+        },
+        {
+          "name": "Error TOKEN_MISSING",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-010 Wrong role POST /api/events/{{extendedEventId}}/book",
+      "source": "AUTO-010. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events/2/book",
+        "body": {}
+      },
+      "actualStatus": 403,
+      "response": {
+        "error": {
+          "code": "FORBIDDEN",
+          "message": "Requires user role"
+        }
+      },
+      "durationMs": 5,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 403",
+          "status": "Pass"
+        },
+        {
+          "name": "Error FORBIDDEN",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-011 Missing JWT DELETE /api/events/{{extendedEventId}}/book",
+      "source": "AUTO-011. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "DELETE",
+        "url": "http://127.0.0.1:11148/api/events/2/book"
+      },
+      "actualStatus": 401,
+      "response": {
+        "error": {
+          "code": "TOKEN_MISSING",
+          "message": "Bearer token is required"
+        }
+      },
+      "durationMs": 3,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 401",
+          "status": "Pass"
+        },
+        {
+          "name": "Error TOKEN_MISSING",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-012 Wrong role DELETE /api/events/{{extendedEventId}}/book",
+      "source": "AUTO-012. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "DELETE",
+        "url": "http://127.0.0.1:11148/api/events/2/book"
+      },
+      "actualStatus": 403,
+      "response": {
+        "error": {
+          "code": "FORBIDDEN",
+          "message": "Requires user role"
+        }
+      },
+      "durationMs": 5,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 403",
+          "status": "Pass"
+        },
+        {
+          "name": "Error FORBIDDEN",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-013 Missing JWT GET /api/bookings/me",
+      "source": "AUTO-013. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/bookings/me"
+      },
+      "actualStatus": 401,
+      "response": {
+        "error": {
+          "code": "TOKEN_MISSING",
+          "message": "Bearer token is required"
+        }
+      },
+      "durationMs": 3,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 401",
+          "status": "Pass"
+        },
+        {
+          "name": "Error TOKEN_MISSING",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-014 Wrong role GET /api/bookings/me",
+      "source": "AUTO-014. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/bookings/me"
+      },
+      "actualStatus": 403,
+      "response": {
+        "error": {
+          "code": "FORBIDDEN",
+          "message": "Requires user role"
+        }
+      },
+      "durationMs": 5,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 403",
+          "status": "Pass"
+        },
+        {
+          "name": "Error FORBIDDEN",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-015 Missing JWT GET /api/events/{{extendedEventId}}/bookings",
+      "source": "AUTO-015. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/events/2/bookings"
+      },
+      "actualStatus": 401,
+      "response": {
+        "error": {
+          "code": "TOKEN_MISSING",
+          "message": "Bearer token is required"
+        }
+      },
+      "durationMs": 3,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 401",
+          "status": "Pass"
+        },
+        {
+          "name": "Error TOKEN_MISSING",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-016 Wrong role GET /api/events/{{extendedEventId}}/bookings",
+      "source": "AUTO-016. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/events/2/bookings"
+      },
+      "actualStatus": 403,
+      "response": {
+        "error": {
+          "code": "FORBIDDEN",
+          "message": "Requires organizer role"
+        }
+      },
+      "durationMs": 5,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 403",
+          "status": "Pass"
+        },
+        {
+          "name": "Error FORBIDDEN",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-017 Non-owner PUT",
+      "source": "AUTO-017. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "PUT",
+        "url": "http://127.0.0.1:11148/api/events/2",
+        "body": {
+          "title": "Extended test event",
+          "description": "",
+          "capacity": 2,
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 403,
+      "response": {
+        "error": {
+          "code": "NOT_EVENT_OWNER",
+          "message": "Only the event organizer may do this"
+        }
+      },
+      "durationMs": 7,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 403",
+          "status": "Pass"
+        },
+        {
+          "name": "Error NOT_EVENT_OWNER",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-018 Non-owner PATCH",
+      "source": "AUTO-018. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "PATCH",
+        "url": "http://127.0.0.1:11148/api/events/2/close",
+        "body": {}
+      },
+      "actualStatus": 403,
+      "response": {
+        "error": {
+          "code": "NOT_EVENT_OWNER",
+          "message": "Only the event organizer may do this"
+        }
+      },
+      "durationMs": 7,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 403",
+          "status": "Pass"
+        },
+        {
+          "name": "Error NOT_EVENT_OWNER",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-019 Non-owner GET",
+      "source": "AUTO-019. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/events/2/bookings"
+      },
+      "actualStatus": 403,
+      "response": {
+        "error": {
+          "code": "NOT_EVENT_OWNER",
+          "message": "Only the event organizer may do this"
+        }
+      },
+      "durationMs": 7,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 403",
+          "status": "Pass"
+        },
+        {
+          "name": "Error NOT_EVENT_OWNER",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-020 Malformed Authorization",
+      "source": "AUTO-020. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/bookings/me"
+      },
+      "actualStatus": 401,
+      "response": {
+        "error": {
+          "code": "TOKEN_MALFORMED",
+          "message": "Authorization must use Bearer token"
+        }
+      },
+      "durationMs": 3,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 401",
+          "status": "Pass"
+        },
+        {
+          "name": "Error TOKEN_MALFORMED",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-021 Damaged signature",
+      "source": "AUTO-021. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/bookings/me"
+      },
+      "actualStatus": 401,
+      "response": {
+        "error": {
+          "code": "TOKEN_INVALID",
+          "message": "Token is invalid"
+        }
+      },
+      "durationMs": 3,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 401",
+          "status": "Pass"
+        },
+        {
+          "name": "Error TOKEN_INVALID",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-022 Expired signed JWT",
+      "source": "AUTO-022. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/bookings/me"
+      },
+      "actualStatus": 401,
+      "response": {
+        "error": {
+          "code": "TOKEN_EXPIRED",
+          "message": "Token has expired"
+        }
+      },
+      "durationMs": 4,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 401",
+          "status": "Pass"
+        },
+        {
+          "name": "Error TOKEN_EXPIRED",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-023 Disallowed algorithm",
+      "source": "AUTO-023. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/bookings/me"
+      },
+      "actualStatus": 401,
+      "response": {
+        "error": {
+          "code": "TOKEN_INVALID",
+          "message": "Token is invalid"
+        }
+      },
+      "durationMs": 3,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 401",
+          "status": "Pass"
+        },
+        {
+          "name": "Error TOKEN_INVALID",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-024 Token subject not in database",
+      "source": "AUTO-024. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/bookings/me"
+      },
+      "actualStatus": 401,
+      "response": {
+        "error": {
+          "code": "TOKEN_INVALID",
+          "message": "Token user no longer exists"
+        }
+      },
+      "durationMs": 5,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 401",
+          "status": "Pass"
+        },
+        {
+          "name": "Error TOKEN_INVALID",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-025 Forged role claim cannot grant Organizer",
+      "source": "AUTO-025. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "Extended test event",
+          "description": "",
+          "capacity": 2,
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 403,
+      "response": {
+        "error": {
+          "code": "FORBIDDEN",
+          "message": "Requires organizer role"
+        }
+      },
+      "durationMs": 3,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 403",
+          "status": "Pass"
+        },
+        {
+          "name": "Error FORBIDDEN",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-026 Cannot self-promote",
+      "source": "AUTO-026. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/register",
+        "body": {
+          "username": "qa_1791551426095_extra",
+          "email": "extra_1791551426095@example.test",
+          "password": "[REDACTED]",
+          "role": "organizer"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "UNKNOWN_FIELD",
+          "message": "Unknown field: role"
+        }
+      },
+      "durationMs": 2,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error UNKNOWN_FIELD",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-027 Register missing username",
+      "source": "AUTO-027. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/register",
+        "body": {
+          "email": "extra_1791551426095@example.test",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "MISSING_FIELD",
+          "message": "Missing field: username"
+        }
+      },
+      "durationMs": 4,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error MISSING_FIELD",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-028 Register missing email",
+      "source": "AUTO-028. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/register",
+        "body": {
+          "username": "qa_1791551426095_extra",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "MISSING_FIELD",
+          "message": "Missing field: email"
+        }
+      },
+      "durationMs": 4,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error MISSING_FIELD",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-029 Register missing password",
+      "source": "AUTO-029. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/register",
+        "body": {
+          "username": "qa_1791551426095_extra",
+          "email": "extra_1791551426095@example.test"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "MISSING_FIELD",
+          "message": "Missing field: password"
+        }
+      },
+      "durationMs": 4,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error MISSING_FIELD",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-030 Register username length 2",
+      "source": "AUTO-030. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/register",
+        "body": {
+          "username": "ab",
+          "email": "extra_1791551426095@example.test",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_FIELD",
+          "message": "username must be 3–50 characters"
+        }
+      },
+      "durationMs": 2,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_FIELD",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-031 Register username length 51",
+      "source": "AUTO-031. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/register",
+        "body": {
+          "username": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "email": "extra_1791551426095@example.test",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_FIELD",
+          "message": "username must be 3–50 characters"
+        }
+      },
+      "durationMs": 4,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_FIELD",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-032 Register username number",
+      "source": "AUTO-032. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/register",
+        "body": {
+          "username": 123,
+          "email": "extra_1791551426095@example.test",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_FIELD",
+          "message": "username must be a string"
+        }
+      },
+      "durationMs": 4,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_FIELD",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-033 Register username whitespace",
+      "source": "AUTO-033. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/register",
+        "body": {
+          "username": "   ",
+          "email": "extra_1791551426095@example.test",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_FIELD",
+          "message": "username must be 3–50 characters"
+        }
+      },
+      "durationMs": 4,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_FIELD",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-034 Register bad email",
+      "source": "AUTO-034. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/register",
+        "body": {
+          "username": "qa_1791551426095_extra",
+          "email": "a@@example.test",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_EMAIL",
+          "message": "email must be a valid address"
+        }
+      },
+      "durationMs": 4,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_EMAIL",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-035 Register email local 65",
+      "source": "AUTO-035. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/register",
+        "body": {
+          "username": "qa_1791551426095_extra",
+          "email": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@example.test",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_EMAIL",
+          "message": "email must be a valid address"
+        }
+      },
+      "durationMs": 3,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_EMAIL",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-036 Register email dots",
+      "source": "AUTO-036. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/register",
+        "body": {
+          "username": "qa_1791551426095_extra",
+          "email": "a..b@example.test",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_EMAIL",
+          "message": "email must be a valid address"
+        }
+      },
+      "durationMs": 3,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_EMAIL",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-037 Register email missing domain label",
+      "source": "AUTO-037. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/register",
+        "body": {
+          "username": "qa_1791551426095_extra",
+          "email": "a@localhost",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_EMAIL",
+          "message": "email must be a valid address"
+        }
+      },
+      "durationMs": 4,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_EMAIL",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-038 Register password length 7",
+      "source": "AUTO-038. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/register",
+        "body": {
+          "username": "qa_1791551426095_extra",
+          "email": "extra_1791551426095@example.test",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_FIELD",
+          "message": "password must be 8–72 characters"
+        }
+      },
+      "durationMs": 3,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_FIELD",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-039 Register password length 73",
+      "source": "AUTO-039. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/register",
+        "body": {
+          "username": "qa_1791551426095_extra",
+          "email": "extra_1791551426095@example.test",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_FIELD",
+          "message": "password must be 8–72 characters"
+        }
+      },
+      "durationMs": 3,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_FIELD",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-040 Register password 75 UTF8 bytes",
+      "source": "AUTO-040. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/register",
+        "body": {
+          "username": "qa_1791551426095_extra",
+          "email": "extra_1791551426095@example.test",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_FIELD",
+          "message": "password must be at most 72 UTF-8 bytes"
+        }
+      },
+      "durationMs": 2,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_FIELD",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-041 Register password null",
+      "source": "AUTO-041. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/register",
+        "body": {
+          "username": "qa_1791551426095_extra",
+          "email": "extra_1791551426095@example.test",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_FIELD",
+          "message": "password must be a string"
+        }
+      },
+      "durationMs": 3,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_FIELD",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-042 Register valid username minimum",
+      "source": "AUTO-042. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/register",
+        "body": {
+          "username": "tdw",
+          "email": "valid_1791551426095_42@example.test",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 201,
+      "response": {
+        "id": "5",
+        "username": "tdw",
+        "email": "valid_1791551426095_42@example.test",
+        "role": "user"
+      },
+      "durationMs": 259,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 201",
+          "status": "Pass"
+        },
+        {
+          "name": "No password; public role",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-043 Register valid username maximum",
+      "source": "AUTO-043. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/register",
+        "body": {
+          "username": "max_1791551426095xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+          "email": "valid_1791551426095_43@example.test",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 201,
+      "response": {
+        "id": "6",
+        "username": "max_1791551426095xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "email": "valid_1791551426095_43@example.test",
+        "role": "user"
+      },
+      "durationMs": 256,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 201",
+          "status": "Pass"
+        },
+        {
+          "name": "No password; public role",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-044 Register valid password minimum",
+      "source": "AUTO-044. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/register",
+        "body": {
+          "username": "valid_1791551426095_44",
+          "email": "valid_1791551426095_44@example.test",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 201,
+      "response": {
+        "id": "7",
+        "username": "valid_1791551426095_44",
+        "email": "valid_1791551426095_44@example.test",
+        "role": "user"
+      },
+      "durationMs": 253,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 201",
+          "status": "Pass"
+        },
+        {
+          "name": "No password; public role",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-045 Register valid password maximum bytes",
+      "source": "AUTO-045. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/register",
+        "body": {
+          "username": "valid_1791551426095_45",
+          "email": "valid_1791551426095_45@example.test",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 201,
+      "response": {
+        "id": "8",
+        "username": "valid_1791551426095_45",
+        "email": "valid_1791551426095_45@example.test",
+        "role": "user"
+      },
+      "durationMs": 253,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 201",
+          "status": "Pass"
+        },
+        {
+          "name": "No password; public role",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-046 Register valid email normalization",
+      "source": "AUTO-046. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/register",
+        "body": {
+          "username": "valid_1791551426095_46",
+          "email": "  NORMAL_1791551426095@EXAMPLE.TEST  ",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 201,
+      "response": {
+        "id": "9",
+        "username": "valid_1791551426095_46",
+        "email": "normal_1791551426095@example.test",
+        "role": "user"
+      },
+      "durationMs": 258,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 201",
+          "status": "Pass"
+        },
+        {
+          "name": "No password; public role",
+          "status": "Pass"
+        },
+        {
+          "name": "Email normalized",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-047 Duplicate username",
+      "source": "AUTO-047. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/register",
+        "body": {
+          "username": "qa_user_a_1791551426095",
+          "email": "extra_1791551426095@example.test",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 409,
+      "response": {
+        "error": {
+          "code": "DUPLICATE",
+          "message": "A unique value already exists"
+        }
+      },
+      "durationMs": 252,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 409",
+          "status": "Pass"
+        },
+        {
+          "name": "Error DUPLICATE",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-048 Duplicate normalized email",
+      "source": "AUTO-048. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/register",
+        "body": {
+          "username": "qa_1791551426095_extra",
+          "email": "  qa_user_a_1791551426095@example.test  ",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 409,
+      "response": {
+        "error": {
+          "code": "DUPLICATE",
+          "message": "A unique value already exists"
+        }
+      },
+      "durationMs": 252,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 409",
+          "status": "Pass"
+        },
+        {
+          "name": "Error DUPLICATE",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-049 Login wrong password",
+      "source": "AUTO-049. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/login",
+        "body": {
+          "email": "qa_user_a_1791551426095@example.test",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 401,
+      "response": {
+        "error": {
+          "code": "INVALID_CREDENTIALS",
+          "message": "Invalid email or password"
+        }
+      },
+      "durationMs": 250,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 401",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_CREDENTIALS",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-050 Login unknown account",
+      "source": "AUTO-050. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/login",
+        "body": {
+          "email": "absent_1791551426095@example.test",
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 401,
+      "response": {
+        "error": {
+          "code": "INVALID_CREDENTIALS",
+          "message": "Invalid email or password"
+        }
+      },
+      "durationMs": 4,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 401",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_CREDENTIALS",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-051 Login missing password",
+      "source": "AUTO-051. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/login",
+        "body": {
+          "email": "qa_user_a_1791551426095@example.test"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "MISSING_FIELD",
+          "message": "Missing field: password"
+        }
+      },
+      "durationMs": 2,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error MISSING_FIELD",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-052 Login wrong type",
+      "source": "AUTO-052. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/login",
+        "body": {
+          "email": 12,
+          "password": "[REDACTED]"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_FIELD",
+          "message": "email must be a string"
+        }
+      },
+      "durationMs": 3,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_FIELD",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-053 Login unknown field",
+      "source": "AUTO-053. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/login",
+        "body": {
+          "email": "qa_user_a_1791551426095@example.test",
+          "password": "[REDACTED]",
+          "role": "user"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "UNKNOWN_FIELD",
+          "message": "Unknown field: role"
+        }
+      },
+      "durationMs": 3,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error UNKNOWN_FIELD",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-054 Create array",
+      "source": "AUTO-054. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": []
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_BODY",
+          "message": "A JSON object is required"
+        }
+      },
+      "durationMs": 5,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_BODY",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-055 Create unknown owner",
+      "source": "AUTO-055. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "Extended test event",
+          "description": "",
+          "capacity": 2,
+          "start_time": "2026-10-16T13:10:26.095Z",
+          "organizer_id": "1"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "UNKNOWN_FIELD",
+          "message": "Unknown field: organizer_id"
+        }
+      },
+      "durationMs": 5,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error UNKNOWN_FIELD",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-056 Create missing capacity",
+      "source": "AUTO-056. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "x",
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "MISSING_FIELD",
+          "message": "Missing field: capacity"
+        }
+      },
+      "durationMs": 4,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error MISSING_FIELD",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-057 Create blank title",
+      "source": "AUTO-057. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "  ",
+          "description": "",
+          "capacity": 2,
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_FIELD",
+          "message": "title must be 1–120 characters"
+        }
+      },
+      "durationMs": 4,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_FIELD",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-058 Create title 121",
+      "source": "AUTO-058. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "description": "",
+          "capacity": 2,
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_FIELD",
+          "message": "title must be 1–120 characters"
+        }
+      },
+      "durationMs": 4,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_FIELD",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-059 Create description 2001",
+      "source": "AUTO-059. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "Extended test event",
+          "description": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "capacity": 2,
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_FIELD",
+          "message": "description must be 0–2000 characters"
+        }
+      },
+      "durationMs": 5,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_FIELD",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-060 Create description null",
+      "source": "AUTO-060. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "Extended test event",
+          "description": null,
+          "capacity": 2,
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_FIELD",
+          "message": "description must be a string"
+        }
+      },
+      "durationMs": 4,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_FIELD",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-061 Capacity 0",
+      "source": "AUTO-061. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "Extended test event",
+          "description": "",
+          "capacity": 0,
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_CAPACITY",
+          "message": "capacity must be an integer from 1 to 100000"
+        }
+      },
+      "durationMs": 5,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_CAPACITY",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-062 Capacity -1",
+      "source": "AUTO-062. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "Extended test event",
+          "description": "",
+          "capacity": -1,
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_CAPACITY",
+          "message": "capacity must be an integer from 1 to 100000"
+        }
+      },
+      "durationMs": 3,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_CAPACITY",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-063 Capacity 1.5",
+      "source": "AUTO-063. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "Extended test event",
+          "description": "",
+          "capacity": 1.5,
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_CAPACITY",
+          "message": "capacity must be an integer from 1 to 100000"
+        }
+      },
+      "durationMs": 5,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_CAPACITY",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-064 Capacity 100001",
+      "source": "AUTO-064. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "Extended test event",
+          "description": "",
+          "capacity": 100001,
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_CAPACITY",
+          "message": "capacity must be an integer from 1 to 100000"
+        }
+      },
+      "durationMs": 5,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_CAPACITY",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-065 Capacity \"1\"",
+      "source": "AUTO-065. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "Extended test event",
+          "description": "",
+          "capacity": "1",
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_CAPACITY",
+          "message": "capacity must be an integer from 1 to 100000"
+        }
+      },
+      "durationMs": 4,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_CAPACITY",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-066 Capacity null",
+      "source": "AUTO-066. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "Extended test event",
+          "description": "",
+          "capacity": null,
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_CAPACITY",
+          "message": "capacity must be an integer from 1 to 100000"
+        }
+      },
+      "durationMs": 5,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_CAPACITY",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-067 Capacity true",
+      "source": "AUTO-067. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "Extended test event",
+          "description": "",
+          "capacity": true,
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_CAPACITY",
+          "message": "capacity must be an integer from 1 to 100000"
+        }
+      },
+      "durationMs": 4,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_CAPACITY",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-068 Invalid start time 2000-01-01T00:00:00Z",
+      "source": "AUTO-068. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "Extended test event",
+          "description": "",
+          "capacity": 2,
+          "start_time": "2000-01-01T00:00:00Z"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_START_TIME",
+          "message": "start_time must be in the future"
+        }
+      },
+      "durationMs": 5,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_START_TIME",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-069 Invalid start time 2099-02-29T00:00:00Z",
+      "source": "AUTO-069. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "Extended test event",
+          "description": "",
+          "capacity": 2,
+          "start_time": "2099-02-29T00:00:00Z"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_START_TIME",
+          "message": "start_time must be a real timestamp"
+        }
+      },
+      "durationMs": 5,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_START_TIME",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-070 Invalid start time 2099-01-01T24:00:00Z",
+      "source": "AUTO-070. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "Extended test event",
+          "description": "",
+          "capacity": 2,
+          "start_time": "2099-01-01T24:00:00Z"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_START_TIME",
+          "message": "start_time must be a real timestamp"
+        }
+      },
+      "durationMs": 4,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_START_TIME",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-071 Invalid start time 2099-01-01T00:00:00",
+      "source": "AUTO-071. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "Extended test event",
+          "description": "",
+          "capacity": 2,
+          "start_time": "2099-01-01T00:00:00"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_START_TIME",
+          "message": "start_time must be ISO 8601 with timezone"
+        }
+      },
+      "durationMs": 5,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_START_TIME",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-072 Invalid start time 2099-01-01T00:00:00+14:01",
+      "source": "AUTO-072. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "Extended test event",
+          "description": "",
+          "capacity": 2,
+          "start_time": "2099-01-01T00:00:00+14:01"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_START_TIME",
+          "message": "start_time must be a real timestamp"
+        }
+      },
+      "durationMs": 5,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_START_TIME",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-073 Invalid start time 123",
+      "source": "AUTO-073. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "Extended test event",
+          "description": "",
+          "capacity": 2,
+          "start_time": 123
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_START_TIME",
+          "message": "start_time must be ISO 8601 with timezone"
+        }
+      },
+      "durationMs": 3,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_START_TIME",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-074 Create valid minimums",
+      "source": "AUTO-074. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "x",
+          "description": "",
+          "capacity": 1,
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 201,
+      "response": {
+        "id": "3",
+        "title": "x",
+        "description": "",
+        "capacity": 1,
+        "start_time": "2026-10-16T13:10:26.095Z",
+        "status": "OPEN",
+        "organizer_id": "1"
+      },
+      "durationMs": 11,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 201",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-075 Create valid maximums",
+      "source": "AUTO-075. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+          "description": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+          "capacity": 100000,
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 201,
+      "response": {
+        "id": "4",
+        "title": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "description": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "capacity": 100000,
+        "start_time": "2026-10-16T13:10:26.095Z",
+        "status": "OPEN",
+        "organizer_id": "1"
+      },
+      "durationMs": 9,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 201",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-076 Create valid timezone offset",
+      "source": "AUTO-076. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "Extended test event",
+          "description": "",
+          "capacity": 2,
+          "start_time": "2099-01-01T08:00:00+08:00"
+        }
+      },
+      "actualStatus": 201,
+      "response": {
+        "id": "5",
+        "title": "Extended test event",
+        "description": "",
+        "capacity": 2,
+        "start_time": "2099-01-01T00:00:00.000Z",
+        "status": "OPEN",
+        "organizer_id": "1"
+      },
+      "durationMs": 9,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 201",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-077 Strict ID 0",
+      "source": "AUTO-077. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/events/0"
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_ID",
+          "message": "ID must be a positive decimal integer"
+        }
+      },
+      "durationMs": 5,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_ID",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-078 Strict ID -1",
+      "source": "AUTO-078. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/events/-1"
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_ID",
+          "message": "ID must be a positive decimal integer"
+        }
+      },
+      "durationMs": 4,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_ID",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-079 Strict ID 01",
+      "source": "AUTO-079. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/events/01"
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_ID",
+          "message": "ID must be a positive decimal integer"
+        }
+      },
+      "durationMs": 1,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_ID",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-080 Strict ID 1.5",
+      "source": "AUTO-080. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/events/1.5"
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_ID",
+          "message": "ID must be a positive decimal integer"
+        }
+      },
+      "durationMs": 3,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_ID",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-081 Strict ID 12abc",
+      "source": "AUTO-081. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/events/12abc"
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_ID",
+          "message": "ID must be a positive decimal integer"
+        }
+      },
+      "durationMs": 4,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_ID",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-082 Strict ID 9007199254740992",
+      "source": "AUTO-082. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/events/9007199254740992"
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_ID",
+          "message": "ID must be a positive decimal integer"
+        }
+      },
+      "durationMs": 3,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_ID",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-083 Strict ID %201",
+      "source": "AUTO-083. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/events/%201"
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_ID",
+          "message": "ID must be a positive decimal integer"
+        }
+      },
+      "durationMs": 3,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_ID",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-084 Strict ID 1%20",
+      "source": "AUTO-084. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/events/1%20"
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_ID",
+          "message": "ID must be a positive decimal integer"
+        }
+      },
+      "durationMs": 4,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_ID",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-085 Missing event GET ",
+      "source": "AUTO-085. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/events/9007199254740991"
+      },
+      "actualStatus": 404,
+      "response": {
+        "error": {
+          "code": "EVENT_NOT_FOUND",
+          "message": "Event not found"
+        }
+      },
+      "durationMs": 3,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 404",
+          "status": "Pass"
+        },
+        {
+          "name": "Error EVENT_NOT_FOUND",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-086 Missing event PUT ",
+      "source": "AUTO-086. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "PUT",
+        "url": "http://127.0.0.1:11148/api/events/9007199254740991",
+        "body": {
+          "title": "Extended test event",
+          "description": "",
+          "capacity": 2,
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 404,
+      "response": {
+        "error": {
+          "code": "EVENT_NOT_FOUND",
+          "message": "Event not found"
+        }
+      },
+      "durationMs": 7,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 404",
+          "status": "Pass"
+        },
+        {
+          "name": "Error EVENT_NOT_FOUND",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-087 Missing event PATCH /close",
+      "source": "AUTO-087. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "PATCH",
+        "url": "http://127.0.0.1:11148/api/events/9007199254740991/close",
+        "body": {}
+      },
+      "actualStatus": 404,
+      "response": {
+        "error": {
+          "code": "EVENT_NOT_FOUND",
+          "message": "Event not found"
+        }
+      },
+      "durationMs": 7,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 404",
+          "status": "Pass"
+        },
+        {
+          "name": "Error EVENT_NOT_FOUND",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-088 Missing event POST /book",
+      "source": "AUTO-088. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events/9007199254740991/book",
+        "body": {}
+      },
+      "actualStatus": 404,
+      "response": {
+        "error": {
+          "code": "EVENT_NOT_FOUND",
+          "message": "Event not found"
+        }
+      },
+      "durationMs": 7,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 404",
+          "status": "Pass"
+        },
+        {
+          "name": "Error EVENT_NOT_FOUND",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-089 Missing event DELETE /book",
+      "source": "AUTO-089. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "DELETE",
+        "url": "http://127.0.0.1:11148/api/events/9007199254740991/book"
+      },
+      "actualStatus": 404,
+      "response": {
+        "error": {
+          "code": "EVENT_NOT_FOUND",
+          "message": "Event not found"
+        }
+      },
+      "durationMs": 7,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 404",
+          "status": "Pass"
+        },
+        {
+          "name": "Error EVENT_NOT_FOUND",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-090 Missing event GET /bookings",
+      "source": "AUTO-090. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/events/9007199254740991/bookings"
+      },
+      "actualStatus": 404,
+      "response": {
+        "error": {
+          "code": "EVENT_NOT_FOUND",
+          "message": "Event not found"
+        }
+      },
+      "durationMs": 4,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 404",
+          "status": "Pass"
+        },
+        {
+          "name": "Error EVENT_NOT_FOUND",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-091 Booking rejects user_id",
+      "source": "AUTO-091. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events/2/book",
+        "body": {
+          "user_id": "4"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "UNKNOWN_FIELD",
+          "message": "Unknown field: user_id"
+        }
+      },
+      "durationMs": 5,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error UNKNOWN_FIELD",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-092 Close rejects supplied status",
+      "source": "AUTO-092. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "PATCH",
+        "url": "http://127.0.0.1:11148/api/events/2/close",
+        "body": {
+          "status": "OPEN"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "UNKNOWN_FIELD",
+          "message": "Unknown field: status"
+        }
+      },
+      "durationMs": 5,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error UNKNOWN_FIELD",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-093 PUT requires complete fields",
+      "source": "AUTO-093. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "PUT",
+        "url": "http://127.0.0.1:11148/api/events/2",
+        "body": {
+          "title": "x"
+        }
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "MISSING_FIELD",
+          "message": "Missing field: capacity"
+        }
+      },
+      "durationMs": 4,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error MISSING_FIELD",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-094 Cancel without booking",
+      "source": "AUTO-094. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "DELETE",
+        "url": "http://127.0.0.1:11148/api/events/2/book"
+      },
+      "actualStatus": 404,
+      "response": {
+        "error": {
+          "code": "BOOKING_NOT_FOUND",
+          "message": "Your booking was not found"
+        }
+      },
+      "durationMs": 4,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 404",
+          "status": "Pass"
+        },
+        {
+          "name": "Error BOOKING_NOT_FOUND",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-095 A books extended event",
+      "source": "AUTO-095. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events/2/book",
+        "body": {}
+      },
+      "actualStatus": 201,
+      "response": {
+        "id": "3",
+        "event_id": "2",
+        "user_id": "3",
+        "status": "ACTIVE",
+        "rebooked": false
+      },
+      "durationMs": 13,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 201",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-096 B cannot cancel A booking",
+      "source": "AUTO-096. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "DELETE",
+        "url": "http://127.0.0.1:11148/api/events/2/book"
+      },
+      "actualStatus": 404,
+      "response": {
+        "error": {
+          "code": "BOOKING_NOT_FOUND",
+          "message": "Your booking was not found"
+        }
+      },
+      "durationMs": 7,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 404",
+          "status": "Pass"
+        },
+        {
+          "name": "Error BOOKING_NOT_FOUND",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-097 B books extended event",
+      "source": "AUTO-097. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events/2/book",
+        "body": {}
+      },
+      "actualStatus": 201,
+      "response": {
+        "id": "4",
+        "event_id": "2",
+        "user_id": "4",
+        "status": "ACTIVE",
+        "rebooked": false
+      },
+      "durationMs": 14,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 201",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-098 Capacity below active rejected",
+      "source": "AUTO-098. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "PUT",
+        "url": "http://127.0.0.1:11148/api/events/2",
+        "body": {
+          "title": "Extended test event",
+          "description": "",
+          "capacity": 1,
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 409,
+      "response": {
+        "error": {
+          "code": "CAPACITY_BELOW_BOOKINGS",
+          "message": "capacity is below active bookings"
+        }
+      },
+      "durationMs": 8,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 409",
+          "status": "Pass"
+        },
+        {
+          "name": "Error CAPACITY_BELOW_BOOKINGS",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-099 Rejected PUT preserves data",
+      "source": "AUTO-099. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/events/2"
+      },
+      "actualStatus": 200,
+      "response": {
+        "id": "2",
+        "title": "Extended test event",
+        "description": "",
+        "capacity": 2,
+        "status": "OPEN",
+        "organizer_id": "1",
+        "start_time": "2026-10-16T13:10:26.095Z",
+        "created_at": "2026-10-09T21:10:30.122Z",
+        "active_bookings": "2"
+      },
+      "durationMs": 5,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 200",
+          "status": "Pass"
+        },
+        {
+          "name": "Capacity unchanged and count is two",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-100 Capacity equals active allowed",
+      "source": "AUTO-100. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "PUT",
+        "url": "http://127.0.0.1:11148/api/events/2",
+        "body": {
+          "title": "Extended test event",
+          "description": "",
+          "capacity": 2,
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 200,
+      "response": {
+        "id": "2",
+        "title": "Extended test event",
+        "description": "",
+        "capacity": 2,
+        "start_time": "2026-10-16T13:10:26.095Z",
+        "status": "OPEN",
+        "organizer_id": "1"
+      },
+      "durationMs": 8,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 200",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-101 A cancels extended event",
+      "source": "AUTO-101. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "DELETE",
+        "url": "http://127.0.0.1:11148/api/events/2/book"
+      },
+      "actualStatus": 200,
+      "response": {
+        "id": "3",
+        "event_id": "2",
+        "user_id": "3",
+        "status": "CANCELLED"
+      },
+      "durationMs": 11,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 200",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-102 Repeated cancellation rejected",
+      "source": "AUTO-102. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "DELETE",
+        "url": "http://127.0.0.1:11148/api/events/2/book"
+      },
+      "actualStatus": 409,
+      "response": {
+        "error": {
+          "code": "BOOKING_CANCELLED",
+          "message": "Booking is already cancelled"
+        }
+      },
+      "durationMs": 8,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 409",
+          "status": "Pass"
+        },
+        {
+          "name": "Error BOOKING_CANCELLED",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-103 B history excludes A IDs",
+      "source": "AUTO-103. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/bookings/me"
+      },
+      "actualStatus": 200,
+      "response": {
+        "bookings": [
+          {
+            "id": "4",
+            "event_id": "2",
+            "title": "Extended test event",
+            "status": "ACTIVE",
+            "created_at": "2026-10-09T21:10:40.650Z",
+            "updated_at": "2026-10-09T21:10:40.650Z"
+          },
+          {
+            "id": "2",
+            "event_id": "1",
+            "title": "Postman booking chain updated 1791551426095",
+            "status": "ACTIVE",
+            "created_at": "2026-10-09T21:10:28.978Z",
+            "updated_at": "2026-10-09T21:10:28.978Z"
+          }
+        ]
+      },
+      "durationMs": 3,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 200",
+          "status": "Pass"
+        },
+        {
+          "name": "No A booking IDs",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-104 Closed event cannot be edited",
+      "source": "AUTO-104. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "PUT",
+        "url": "http://127.0.0.1:11148/api/events/1",
+        "body": {
+          "title": "Extended test event",
+          "description": "",
+          "capacity": 2,
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 409,
+      "response": {
+        "error": {
+          "code": "EVENT_CLOSED",
+          "message": "Closed events cannot be edited"
+        }
+      },
+      "durationMs": 7,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 409",
+          "status": "Pass"
+        },
+        {
+          "name": "Error EVENT_CLOSED",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-105 Cancel allowed after CLOSED",
+      "source": "AUTO-105. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "DELETE",
+        "url": "http://127.0.0.1:11148/api/events/1/book"
+      },
+      "actualStatus": 200,
+      "response": {
+        "id": "2",
+        "event_id": "1",
+        "user_id": "4",
+        "status": "CANCELLED"
+      },
+      "durationMs": 12,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 200",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-106 Create rebook-full fixture",
+      "source": "AUTO-106. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events",
+        "body": {
+          "title": "Extended test event",
+          "description": "",
+          "capacity": 1,
+          "start_time": "2026-10-16T13:10:26.095Z"
+        }
+      },
+      "actualStatus": 201,
+      "response": {
+        "id": "6",
+        "title": "Extended test event",
+        "description": "",
+        "capacity": 1,
+        "start_time": "2026-10-16T13:10:26.095Z",
+        "status": "OPEN",
+        "organizer_id": "1"
+      },
+      "durationMs": 7,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 201",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-107 A first books rebook-full fixture",
+      "source": "AUTO-107. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events/6/book",
+        "body": {}
+      },
+      "actualStatus": 201,
+      "response": {
+        "id": "5",
+        "event_id": "6",
+        "user_id": "3",
+        "status": "ACTIVE",
+        "rebooked": false
+      },
+      "durationMs": 13,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 201",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-108 A releases rebook-full fixture",
+      "source": "AUTO-108. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "DELETE",
+        "url": "http://127.0.0.1:11148/api/events/6/book"
+      },
+      "actualStatus": 200,
+      "response": {
+        "id": "5",
+        "event_id": "6",
+        "user_id": "3",
+        "status": "CANCELLED"
+      },
+      "durationMs": 12,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 200",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-109 B takes rebook-full fixture",
+      "source": "AUTO-109. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events/6/book",
+        "body": {}
+      },
+      "actualStatus": 201,
+      "response": {
+        "id": "6",
+        "event_id": "6",
+        "user_id": "4",
+        "status": "ACTIVE",
+        "rebooked": false
+      },
+      "durationMs": 13,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 201",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-110 Rebooking cannot bypass full capacity",
+      "source": "AUTO-110. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/events/6/book",
+        "body": {}
+      },
+      "actualStatus": 409,
+      "response": {
+        "error": {
+          "code": "EVENT_FULL",
+          "message": "Event is full"
+        }
+      },
+      "durationMs": 9,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 409",
+          "status": "Pass"
+        },
+        {
+          "name": "Error EVENT_FULL",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-111 Rejected rebooking preserves CANCELLED",
+      "source": "AUTO-111. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/bookings/me"
+      },
+      "actualStatus": 200,
+      "response": {
+        "bookings": [
+          {
+            "id": "5",
+            "event_id": "6",
+            "title": "Extended test event",
+            "status": "CANCELLED",
+            "created_at": "2026-10-09T21:10:41.578Z",
+            "updated_at": "2026-10-09T21:10:41.672Z"
+          },
+          {
+            "id": "3",
+            "event_id": "2",
+            "title": "Extended test event",
+            "status": "CANCELLED",
+            "created_at": "2026-10-09T21:10:40.480Z",
+            "updated_at": "2026-10-09T21:10:41.020Z"
+          },
+          {
+            "id": "1",
+            "event_id": "1",
+            "title": "Postman booking chain updated 1791551426095",
+            "status": "CANCELLED",
+            "created_at": "2026-10-09T21:10:28.272Z",
+            "updated_at": "2026-10-09T21:10:28.900Z"
+          }
+        ]
+      },
+      "durationMs": 6,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 200",
+          "status": "Pass"
+        },
+        {
+          "name": "A row remains CANCELLED",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-112 Public list includes OPEN and CLOSED",
+      "source": "AUTO-112. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/events"
+      },
+      "actualStatus": 200,
+      "response": {
+        "events": [
+          {
+            "id": "1",
+            "title": "Postman booking chain updated 1791551426095",
+            "description": "Updated before booking.",
+            "capacity": 1,
+            "status": "CLOSED",
+            "organizer_id": "1",
+            "start_time": "2026-10-16T13:10:26.095Z",
+            "created_at": "2026-10-09T21:10:27.852Z",
+            "active_bookings": "0"
+          },
+          {
+            "id": "2",
+            "title": "Extended test event",
+            "description": "",
+            "capacity": 2,
+            "status": "OPEN",
+            "organizer_id": "1",
+            "start_time": "2026-10-16T13:10:26.095Z",
+            "created_at": "2026-10-09T21:10:30.122Z",
+            "active_bookings": "1"
+          },
+          {
+            "id": "3",
+            "title": "x",
+            "description": "",
+            "capacity": 1,
+            "status": "OPEN",
+            "organizer_id": "1",
+            "start_time": "2026-10-16T13:10:26.095Z",
+            "created_at": "2026-10-09T21:10:38.599Z",
+            "active_bookings": "0"
+          },
+          {
+            "id": "4",
+            "title": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+            "description": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+            "capacity": 100000,
+            "status": "OPEN",
+            "organizer_id": "1",
+            "start_time": "2026-10-16T13:10:26.095Z",
+            "created_at": "2026-10-09T21:10:38.692Z",
+            "active_bookings": "0"
+          },
+          {
+            "id": "6",
+            "title": "Extended test event",
+            "description": "",
+            "capacity": 1,
+            "status": "OPEN",
+            "organizer_id": "1",
+            "start_time": "2026-10-16T13:10:26.095Z",
+            "created_at": "2026-10-09T21:10:41.481Z",
+            "active_bookings": "1"
+          },
+          {
+            "id": "5",
+            "title": "Extended test event",
+            "description": "",
+            "capacity": 2,
+            "status": "OPEN",
+            "organizer_id": "1",
+            "start_time": "2099-01-01T00:00:00.000Z",
+            "created_at": "2026-10-09T21:10:38.784Z",
+            "active_bookings": "0"
+          }
+        ]
+      },
+      "durationMs": 6,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 200",
+          "status": "Pass"
+        },
+        {
+          "name": "Both states stay visible",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-113 Public detail contract count",
+      "source": "AUTO-113. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:11148/api/events/2"
+      },
+      "actualStatus": 200,
+      "response": {
+        "id": "2",
+        "title": "Extended test event",
+        "description": "",
+        "capacity": 2,
+        "status": "OPEN",
+        "organizer_id": "1",
+        "start_time": "2026-10-16T13:10:26.095Z",
+        "created_at": "2026-10-09T21:10:30.122Z",
+        "active_bookings": "1"
+      },
+      "durationMs": 4,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 200",
+          "status": "Pass"
+        },
+        {
+          "name": "active_bookings follows OpenAPI integer contract",
+          "status": "Fail",
+          "message": "expected '1' to be a number"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-114 Malformed JSON",
+      "source": "AUTO-114. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/register",
+        "body": "{\"username\":"
+      },
+      "actualStatus": 400,
+      "response": {
+        "error": {
+          "code": "INVALID_JSON",
+          "message": "Malformed JSON body"
+        }
+      },
+      "durationMs": 4,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 400",
+          "status": "Pass"
+        },
+        {
+          "name": "Error INVALID_JSON",
+          "status": "Pass"
+        }
+      ]
+    },
+    {
+      "name": "AUTO-115 Body larger than 32kb",
+      "source": "AUTO-115. Source: implemented routes/validators and docs/business-rules.md. See automated-cases.md.",
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:11148/api/auth/register",
+        "body": {
+          "padding": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx [TRUNCATED]"
+        }
+      },
+      "actualStatus": 413,
+      "response": {
+        "error": {
+          "code": "BODY_TOO_LARGE",
+          "message": "Request body is too large"
+        }
+      },
+      "durationMs": 5,
+      "assertions": [
+        {
+          "name": "Response uses JSON content type",
+          "status": "Pass"
+        },
+        {
+          "name": "HTTP 413",
+          "status": "Pass"
+        },
+        {
+          "name": "Error BODY_TOO_LARGE",
+          "status": "Pass"
+        }
+      ]
+    }
+  ]
+}

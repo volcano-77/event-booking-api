@@ -1,0 +1,22 @@
+{
+  "reviewedAt": "2026-10-09T13:41:19.391Z",
+  "policy": "Preserve original evidence; correct metadata here without overwriting historical results",
+  "corrections": [
+    {
+      "runId": "2026-10-09T13-13-20-568Z-7b6dd1",
+      "originalManifestSha256": "e53c1d6e9fddf9dde16d0d1594bbcc67bce2bfe5005e0ab4f71777c458283b82",
+      "originalRecordedCommand": "$env:EVENT_BOOKING_ALLOW_TEST_WRITES=\"YES\"; npm run test:local",
+      "correctCommand": "EVENT_BOOKING_ALLOW_TEST_WRITES=YES; npm run test:local -- --probe",
+      "basis": "Original run mode, execution report and observed invocation; old command was hard-coded",
+      "originalStatus": "Fail"
+    },
+    {
+      "runId": "2026-10-09T13-19-35-543Z-cd8f6c",
+      "originalManifestSha256": "6510a68bee3bba42d814ebbf15dd1c05ab500403ca98809ed9232859a23ea9ff",
+      "originalRecordedCommand": "$env:EVENT_BOOKING_ALLOW_TEST_WRITES=\"YES\"; npm run test:local",
+      "correctCommand": "EVENT_BOOKING_ALLOW_TEST_WRITES=YES; npm run test:lab",
+      "basis": "Original run mode, execution report and observed invocation; old command was hard-coded",
+      "originalStatus": "Not Run"
+    }
+  ]
+}

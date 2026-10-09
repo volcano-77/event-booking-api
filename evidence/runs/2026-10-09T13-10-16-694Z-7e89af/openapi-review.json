@@ -1,0 +1,19 @@
+{
+  "id": "DOC-001",
+  "description": "Response Object allows only OpenAPI response properties",
+  "status": "Fail",
+  "issues": [
+    {
+      "route": "/api/auth/register",
+      "method": "post",
+      "status": "201",
+      "unexpectedResponseProperty": "username,"
+    },
+    {
+      "route": "/api/auth/register",
+      "method": "post",
+      "status": "201",
+      "unexpectedResponseProperty": "and"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+[
+  {
+    "id": "REG-COUNT",
+    "status": "Fail",
+    "expected": "active_bookings is an integer in list and detail",
+    "actual": {
+      "detailValue": "0",
+      "detailType": "string",
+      "listValue": "0",
+      "listType": "string"
+    }
+  },
+  {
+    "id": "REG-TIME",
+    "status": "Fail",
+    "expected": "created_at represents the actual instant of creation (ISO UTC), within request time window",
+    "actual": {
+      "requestStart": "2026-10-09T13:13:32.871Z",
+      "responseEnd": "2026-10-09T13:13:32.900Z",
+      "apiCreatedAt": "2026-10-09T21:13:32.880Z",
+      "offsetFromEndSeconds": 28799.98,
+      "databaseTime": {
+        "db_local_now": "2026-10-09T21:13:32.900Z",
+        "db_utc_now": "2026-10-09T13:13:32.900Z",
+        "session_timezone": "SYSTEM",
+        "global_timezone": "SYSTEM"
+      }
+    }
+  },
+  {
+    "id": "REG-OPENAPI",
+    "status": "Fail",
+    "expected": "OpenAPI Response Object contains supported keys only",
+    "actual": {
+      "unexpectedKeys": [
+        "username,",
+        "and"
+      ]
+    }
+  }
+]

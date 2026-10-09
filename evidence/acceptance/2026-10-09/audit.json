@@ -1,0 +1,87 @@
+{
+  "reviewedAt": "2026-10-09T13:53:43.959Z",
+  "status": "Pass",
+  "scope": "Local candidate portfolio acceptance; no cross-computer or full security certification",
+  "scannedCandidateFiles": 87,
+  "issues": [],
+  "secretHits": [],
+  "brokenLinks": [],
+  "unexpectedPaths": [],
+  "credentialTemplateEntries": [],
+  "implementationMismatch": [],
+  "original26RequestsPreserved": true,
+  "counts": {
+    "operations": 11,
+    "requests": 143,
+    "autoIds": 117,
+    "autoCatalog": 117,
+    "manualCatalog": 63
+  },
+  "statisticsRecomputed": [
+    {
+      "file": "evidence/runs/2026-10-09T13-10-16-694Z-7e89af/newman.json",
+      "requests": 141,
+      "actualRequests": 141,
+      "assertions": 412,
+      "actualAssertions": 412,
+      "failed": 1,
+      "actualFailed": 1,
+      "notRun": 0
+    },
+    {
+      "file": "evidence/runs/2026-10-09T13-14-52-379Z-381c55/newman.json",
+      "requests": 143,
+      "actualRequests": 143,
+      "assertions": 418,
+      "actualAssertions": 418,
+      "failed": 0,
+      "actualFailed": 0,
+      "notRun": 0
+    },
+    {
+      "file": "evidence/acceptance/2026-10-09/runs/2026-10-09T13-38-50-550Z-38f1e3/newman.json",
+      "requests": 143,
+      "actualRequests": 143,
+      "assertions": 418,
+      "actualAssertions": 418,
+      "failed": 0,
+      "actualFailed": 0,
+      "notRun": 0
+    },
+    {
+      "file": "evidence/acceptance/2026-10-09/runs/2026-10-09T13-40-36-006Z-e8832c/newman.json",
+      "requests": 143,
+      "actualRequests": 143,
+      "assertions": 418,
+      "actualAssertions": 418,
+      "failed": 0,
+      "actualFailed": 0,
+      "notRun": 0
+    },
+    {
+      "file": "evidence/acceptance/2026-10-09/standalone-newman/newman.json",
+      "requests": 139,
+      "actualRequests": 139,
+      "assertions": 406,
+      "actualAssertions": 406,
+      "failed": 0,
+      "actualFailed": 0,
+      "notRun": 4
+    }
+  ],
+  "historicalCommandErrataVerified": true,
+  "syntaxFilesChecked": 18,
+  "gitDiffCheck": true,
+  "packageLockUnchanged": true,
+  "ownedServiceProcessCount": 0,
+  "git": {
+    "branch": "main",
+    "head": "3a2ab14612b50b94cd97d008205413e25c60c2f7",
+    "commits": 5,
+    "modified": 23,
+    "newFiles": 50,
+    "stagedFiles": [],
+    "deletedFiles": [],
+    "origin": "https://github.com/volcano-77/event-booking-api-testing.git"
+  }
+}

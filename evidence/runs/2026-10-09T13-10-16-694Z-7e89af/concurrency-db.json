@@ -1,0 +1,2468 @@
+[
+  {
+    "id": "SETUP-USERS",
+    "title": "Prepare 12 distinct API users for simultaneous booking",
+    "startedAt": "2026-10-09T13:10:42.374Z",
+    "status": "Pass",
+    "steps": [
+      {
+        "method": "POST",
+        "path": "/api/auth/register",
+        "status": 201,
+        "response": {
+          "id": "12",
+          "username": "parallel_1791551442373_0",
+          "email": "parallel_1791551442373_0@example.test",
+          "role": "user"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/auth/login",
+        "status": 200,
+        "response": {
+          "token": "[REDACTED]",
+          "token_type": "[REDACTED]",
+          "user": {
+            "id": "12",
+            "username": "parallel_1791551442373_0",
+            "email": "parallel_1791551442373_0@example.test",
+            "role": "user"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/auth/register",
+        "status": 201,
+        "response": {
+          "id": "13",
+          "username": "parallel_1791551442373_1",
+          "email": "parallel_1791551442373_1@example.test",
+          "role": "user"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/auth/login",
+        "status": 200,
+        "response": {
+          "token": "[REDACTED]",
+          "token_type": "[REDACTED]",
+          "user": {
+            "id": "13",
+            "username": "parallel_1791551442373_1",
+            "email": "parallel_1791551442373_1@example.test",
+            "role": "user"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/auth/register",
+        "status": 201,
+        "response": {
+          "id": "14",
+          "username": "parallel_1791551442373_2",
+          "email": "parallel_1791551442373_2@example.test",
+          "role": "user"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/auth/login",
+        "status": 200,
+        "response": {
+          "token": "[REDACTED]",
+          "token_type": "[REDACTED]",
+          "user": {
+            "id": "14",
+            "username": "parallel_1791551442373_2",
+            "email": "parallel_1791551442373_2@example.test",
+            "role": "user"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/auth/register",
+        "status": 201,
+        "response": {
+          "id": "15",
+          "username": "parallel_1791551442373_3",
+          "email": "parallel_1791551442373_3@example.test",
+          "role": "user"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/auth/login",
+        "status": 200,
+        "response": {
+          "token": "[REDACTED]",
+          "token_type": "[REDACTED]",
+          "user": {
+            "id": "15",
+            "username": "parallel_1791551442373_3",
+            "email": "parallel_1791551442373_3@example.test",
+            "role": "user"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/auth/register",
+        "status": 201,
+        "response": {
+          "id": "16",
+          "username": "parallel_1791551442373_4",
+          "email": "parallel_1791551442373_4@example.test",
+          "role": "user"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/auth/login",
+        "status": 200,
+        "response": {
+          "token": "[REDACTED]",
+          "token_type": "[REDACTED]",
+          "user": {
+            "id": "16",
+            "username": "parallel_1791551442373_4",
+            "email": "parallel_1791551442373_4@example.test",
+            "role": "user"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/auth/register",
+        "status": 201,
+        "response": {
+          "id": "17",
+          "username": "parallel_1791551442373_5",
+          "email": "parallel_1791551442373_5@example.test",
+          "role": "user"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/auth/login",
+        "status": 200,
+        "response": {
+          "token": "[REDACTED]",
+          "token_type": "[REDACTED]",
+          "user": {
+            "id": "17",
+            "username": "parallel_1791551442373_5",
+            "email": "parallel_1791551442373_5@example.test",
+            "role": "user"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/auth/register",
+        "status": 201,
+        "response": {
+          "id": "18",
+          "username": "parallel_1791551442373_6",
+          "email": "parallel_1791551442373_6@example.test",
+          "role": "user"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/auth/login",
+        "status": 200,
+        "response": {
+          "token": "[REDACTED]",
+          "token_type": "[REDACTED]",
+          "user": {
+            "id": "18",
+            "username": "parallel_1791551442373_6",
+            "email": "parallel_1791551442373_6@example.test",
+            "role": "user"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/auth/register",
+        "status": 201,
+        "response": {
+          "id": "19",
+          "username": "parallel_1791551442373_7",
+          "email": "parallel_1791551442373_7@example.test",
+          "role": "user"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/auth/login",
+        "status": 200,
+        "response": {
+          "token": "[REDACTED]",
+          "token_type": "[REDACTED]",
+          "user": {
+            "id": "19",
+            "username": "parallel_1791551442373_7",
+            "email": "parallel_1791551442373_7@example.test",
+            "role": "user"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/auth/register",
+        "status": 201,
+        "response": {
+          "id": "20",
+          "username": "parallel_1791551442373_8",
+          "email": "parallel_1791551442373_8@example.test",
+          "role": "user"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/auth/login",
+        "status": 200,
+        "response": {
+          "token": "[REDACTED]",
+          "token_type": "[REDACTED]",
+          "user": {
+            "id": "20",
+            "username": "parallel_1791551442373_8",
+            "email": "parallel_1791551442373_8@example.test",
+            "role": "user"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/auth/register",
+        "status": 201,
+        "response": {
+          "id": "21",
+          "username": "parallel_1791551442373_9",
+          "email": "parallel_1791551442373_9@example.test",
+          "role": "user"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/auth/login",
+        "status": 200,
+        "response": {
+          "token": "[REDACTED]",
+          "token_type": "[REDACTED]",
+          "user": {
+            "id": "21",
+            "username": "parallel_1791551442373_9",
+            "email": "parallel_1791551442373_9@example.test",
+            "role": "user"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/auth/register",
+        "status": 201,
+        "response": {
+          "id": "22",
+          "username": "parallel_1791551442373_10",
+          "email": "parallel_1791551442373_10@example.test",
+          "role": "user"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/auth/login",
+        "status": 200,
+        "response": {
+          "token": "[REDACTED]",
+          "token_type": "[REDACTED]",
+          "user": {
+            "id": "22",
+            "username": "parallel_1791551442373_10",
+            "email": "parallel_1791551442373_10@example.test",
+            "role": "user"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/auth/register",
+        "status": 201,
+        "response": {
+          "id": "23",
+          "username": "parallel_1791551442373_11",
+          "email": "parallel_1791551442373_11@example.test",
+          "role": "user"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/auth/login",
+        "status": 200,
+        "response": {
+          "token": "[REDACTED]",
+          "token_type": "[REDACTED]",
+          "user": {
+            "id": "23",
+            "username": "parallel_1791551442373_11",
+            "email": "parallel_1791551442373_11@example.test",
+            "role": "user"
+          }
+        }
+      }
+    ],
+    "observations": [],
+    "endedAt": "2026-10-09T13:10:48.431Z"
+  },
+  {
+    "id": "CONC-001-R1",
+    "title": "12 users compete for capacity 3",
+    "startedAt": "2026-10-09T13:10:48.431Z",
+    "status": "Pass",
+    "steps": [
+      {
+        "method": "POST",
+        "path": "/api/events",
+        "status": 201,
+        "response": {
+          "id": "7",
+          "title": "Concurrency 1791551442373",
+          "description": "",
+          "capacity": 3,
+          "start_time": "2026-10-10T13:10:42.373Z",
+          "status": "OPEN",
+          "organizer_id": "1"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/7/book",
+        "status": 201,
+        "response": {
+          "id": "7",
+          "event_id": "7",
+          "user_id": "12",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/7/book",
+        "status": 201,
+        "response": {
+          "id": "8",
+          "event_id": "7",
+          "user_id": "13",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/7/book",
+        "status": 201,
+        "response": {
+          "id": "9",
+          "event_id": "7",
+          "user_id": "17",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/7/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/7/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/7/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/7/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/7/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/7/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/7/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/7/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/7/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      }
+    ],
+    "observations": [
+      {
+        "query": "capacity-and-active-count",
+        "eventId": "7",
+        "capacity": 3,
+        "status": "OPEN",
+        "active": "3",
+        "row_count": "3"
+      }
+    ],
+    "endedAt": "2026-10-09T13:10:48.514Z"
+  },
+  {
+    "id": "CONC-001-R2",
+    "title": "12 users compete for capacity 3",
+    "startedAt": "2026-10-09T13:10:48.514Z",
+    "status": "Pass",
+    "steps": [
+      {
+        "method": "POST",
+        "path": "/api/events",
+        "status": 201,
+        "response": {
+          "id": "8",
+          "title": "Concurrency 1791551442373",
+          "description": "",
+          "capacity": 3,
+          "start_time": "2026-10-10T13:10:42.373Z",
+          "status": "OPEN",
+          "organizer_id": "1"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/8/book",
+        "status": 201,
+        "response": {
+          "id": "10",
+          "event_id": "8",
+          "user_id": "12",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/8/book",
+        "status": 201,
+        "response": {
+          "id": "11",
+          "event_id": "8",
+          "user_id": "14",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/8/book",
+        "status": 201,
+        "response": {
+          "id": "12",
+          "event_id": "8",
+          "user_id": "13",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/8/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/8/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/8/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/8/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/8/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/8/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/8/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/8/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/8/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      }
+    ],
+    "observations": [
+      {
+        "query": "capacity-and-active-count",
+        "eventId": "8",
+        "capacity": 3,
+        "status": "OPEN",
+        "active": "3",
+        "row_count": "3"
+      }
+    ],
+    "endedAt": "2026-10-09T13:10:48.556Z"
+  },
+  {
+    "id": "CONC-001-R3",
+    "title": "12 users compete for capacity 3",
+    "startedAt": "2026-10-09T13:10:48.556Z",
+    "status": "Pass",
+    "steps": [
+      {
+        "method": "POST",
+        "path": "/api/events",
+        "status": 201,
+        "response": {
+          "id": "9",
+          "title": "Concurrency 1791551442373",
+          "description": "",
+          "capacity": 3,
+          "start_time": "2026-10-10T13:10:42.373Z",
+          "status": "OPEN",
+          "organizer_id": "1"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/9/book",
+        "status": 201,
+        "response": {
+          "id": "13",
+          "event_id": "9",
+          "user_id": "12",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/9/book",
+        "status": 201,
+        "response": {
+          "id": "14",
+          "event_id": "9",
+          "user_id": "13",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/9/book",
+        "status": 201,
+        "response": {
+          "id": "15",
+          "event_id": "9",
+          "user_id": "14",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/9/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/9/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/9/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/9/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/9/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/9/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/9/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/9/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/9/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      }
+    ],
+    "observations": [
+      {
+        "query": "capacity-and-active-count",
+        "eventId": "9",
+        "capacity": 3,
+        "status": "OPEN",
+        "active": "3",
+        "row_count": "3"
+      }
+    ],
+    "endedAt": "2026-10-09T13:10:48.599Z"
+  },
+  {
+    "id": "CONC-001-R4",
+    "title": "12 users compete for capacity 3",
+    "startedAt": "2026-10-09T13:10:48.600Z",
+    "status": "Pass",
+    "steps": [
+      {
+        "method": "POST",
+        "path": "/api/events",
+        "status": 201,
+        "response": {
+          "id": "10",
+          "title": "Concurrency 1791551442373",
+          "description": "",
+          "capacity": 3,
+          "start_time": "2026-10-10T13:10:42.373Z",
+          "status": "OPEN",
+          "organizer_id": "1"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/10/book",
+        "status": 201,
+        "response": {
+          "id": "16",
+          "event_id": "10",
+          "user_id": "12",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/10/book",
+        "status": 201,
+        "response": {
+          "id": "17",
+          "event_id": "10",
+          "user_id": "13",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/10/book",
+        "status": 201,
+        "response": {
+          "id": "18",
+          "event_id": "10",
+          "user_id": "14",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/10/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/10/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/10/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/10/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/10/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/10/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/10/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/10/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/10/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      }
+    ],
+    "observations": [
+      {
+        "query": "capacity-and-active-count",
+        "eventId": "10",
+        "capacity": 3,
+        "status": "OPEN",
+        "active": "3",
+        "row_count": "3"
+      }
+    ],
+    "endedAt": "2026-10-09T13:10:48.642Z"
+  },
+  {
+    "id": "CONC-001-R5",
+    "title": "12 users compete for capacity 3",
+    "startedAt": "2026-10-09T13:10:48.642Z",
+    "status": "Pass",
+    "steps": [
+      {
+        "method": "POST",
+        "path": "/api/events",
+        "status": 201,
+        "response": {
+          "id": "11",
+          "title": "Concurrency 1791551442373",
+          "description": "",
+          "capacity": 3,
+          "start_time": "2026-10-10T13:10:42.373Z",
+          "status": "OPEN",
+          "organizer_id": "1"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/11/book",
+        "status": 201,
+        "response": {
+          "id": "19",
+          "event_id": "11",
+          "user_id": "12",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/11/book",
+        "status": 201,
+        "response": {
+          "id": "20",
+          "event_id": "11",
+          "user_id": "13",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/11/book",
+        "status": 201,
+        "response": {
+          "id": "21",
+          "event_id": "11",
+          "user_id": "14",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/11/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/11/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/11/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/11/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/11/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/11/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/11/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/11/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/11/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      }
+    ],
+    "observations": [
+      {
+        "query": "capacity-and-active-count",
+        "eventId": "11",
+        "capacity": 3,
+        "status": "OPEN",
+        "active": "3",
+        "row_count": "3"
+      }
+    ],
+    "endedAt": "2026-10-09T13:10:48.684Z"
+  },
+  {
+    "id": "CONC-002",
+    "title": "8 simultaneous requests from one user create one booking",
+    "startedAt": "2026-10-09T13:10:48.684Z",
+    "status": "Pass",
+    "steps": [
+      {
+        "method": "POST",
+        "path": "/api/events",
+        "status": 201,
+        "response": {
+          "id": "12",
+          "title": "Concurrency 1791551442373",
+          "description": "",
+          "capacity": 3,
+          "start_time": "2026-10-10T13:10:42.373Z",
+          "status": "OPEN",
+          "organizer_id": "1"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/12/book",
+        "status": 201,
+        "response": {
+          "id": "22",
+          "event_id": "12",
+          "user_id": "12",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/12/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "ALREADY_BOOKED",
+            "message": "An active booking already exists"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/12/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "ALREADY_BOOKED",
+            "message": "An active booking already exists"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/12/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "ALREADY_BOOKED",
+            "message": "An active booking already exists"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/12/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "ALREADY_BOOKED",
+            "message": "An active booking already exists"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/12/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "ALREADY_BOOKED",
+            "message": "An active booking already exists"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/12/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "ALREADY_BOOKED",
+            "message": "An active booking already exists"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/12/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "ALREADY_BOOKED",
+            "message": "An active booking already exists"
+          }
+        }
+      }
+    ],
+    "observations": [
+      {
+        "query": "capacity-and-active-count",
+        "eventId": "12",
+        "capacity": 3,
+        "status": "OPEN",
+        "active": "1",
+        "row_count": "1"
+      }
+    ],
+    "endedAt": "2026-10-09T13:10:48.708Z"
+  },
+  {
+    "id": "CONC-003-R1",
+    "title": "Capacity reduction competes with last-place booking",
+    "startedAt": "2026-10-09T13:10:48.708Z",
+    "status": "Pass",
+    "steps": [
+      {
+        "method": "POST",
+        "path": "/api/events",
+        "status": 201,
+        "response": {
+          "id": "13",
+          "title": "Concurrency 1791551442373",
+          "description": "",
+          "capacity": 2,
+          "start_time": "2026-10-10T13:10:42.373Z",
+          "status": "OPEN",
+          "organizer_id": "1"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/13/book",
+        "status": 201,
+        "response": {
+          "id": "23",
+          "event_id": "13",
+          "user_id": "12",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/13/book",
+        "status": 201,
+        "response": {
+          "id": "24",
+          "event_id": "13",
+          "user_id": "13",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "PUT",
+        "path": "/api/events/13",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "CAPACITY_BELOW_BOOKINGS",
+            "message": "capacity is below active bookings"
+          }
+        }
+      }
+    ],
+    "observations": [
+      {
+        "query": "capacity-and-active-count",
+        "eventId": "13",
+        "capacity": 2,
+        "status": "OPEN",
+        "active": "2",
+        "row_count": "2"
+      }
+    ],
+    "endedAt": "2026-10-09T13:10:48.729Z"
+  },
+  {
+    "id": "CONC-003-R2",
+    "title": "Capacity reduction competes with last-place booking",
+    "startedAt": "2026-10-09T13:10:48.729Z",
+    "status": "Pass",
+    "steps": [
+      {
+        "method": "POST",
+        "path": "/api/events",
+        "status": 201,
+        "response": {
+          "id": "14",
+          "title": "Concurrency 1791551442373",
+          "description": "",
+          "capacity": 2,
+          "start_time": "2026-10-10T13:10:42.373Z",
+          "status": "OPEN",
+          "organizer_id": "1"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/14/book",
+        "status": 201,
+        "response": {
+          "id": "25",
+          "event_id": "14",
+          "user_id": "12",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/14/book",
+        "status": 201,
+        "response": {
+          "id": "26",
+          "event_id": "14",
+          "user_id": "13",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "PUT",
+        "path": "/api/events/14",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "CAPACITY_BELOW_BOOKINGS",
+            "message": "capacity is below active bookings"
+          }
+        }
+      }
+    ],
+    "observations": [
+      {
+        "query": "capacity-and-active-count",
+        "eventId": "14",
+        "capacity": 2,
+        "status": "OPEN",
+        "active": "2",
+        "row_count": "2"
+      }
+    ],
+    "endedAt": "2026-10-09T13:10:48.752Z"
+  },
+  {
+    "id": "CONC-003-R3",
+    "title": "Capacity reduction competes with last-place booking",
+    "startedAt": "2026-10-09T13:10:48.752Z",
+    "status": "Pass",
+    "steps": [
+      {
+        "method": "POST",
+        "path": "/api/events",
+        "status": 201,
+        "response": {
+          "id": "15",
+          "title": "Concurrency 1791551442373",
+          "description": "",
+          "capacity": 2,
+          "start_time": "2026-10-10T13:10:42.373Z",
+          "status": "OPEN",
+          "organizer_id": "1"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/15/book",
+        "status": 201,
+        "response": {
+          "id": "27",
+          "event_id": "15",
+          "user_id": "12",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/15/book",
+        "status": 201,
+        "response": {
+          "id": "28",
+          "event_id": "15",
+          "user_id": "13",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "PUT",
+        "path": "/api/events/15",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "CAPACITY_BELOW_BOOKINGS",
+            "message": "capacity is below active bookings"
+          }
+        }
+      }
+    ],
+    "observations": [
+      {
+        "query": "capacity-and-active-count",
+        "eventId": "15",
+        "capacity": 2,
+        "status": "OPEN",
+        "active": "2",
+        "row_count": "2"
+      }
+    ],
+    "endedAt": "2026-10-09T13:10:48.774Z"
+  },
+  {
+    "id": "CONC-003-R4",
+    "title": "Capacity reduction competes with last-place booking",
+    "startedAt": "2026-10-09T13:10:48.774Z",
+    "status": "Pass",
+    "steps": [
+      {
+        "method": "POST",
+        "path": "/api/events",
+        "status": 201,
+        "response": {
+          "id": "16",
+          "title": "Concurrency 1791551442373",
+          "description": "",
+          "capacity": 2,
+          "start_time": "2026-10-10T13:10:42.373Z",
+          "status": "OPEN",
+          "organizer_id": "1"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/16/book",
+        "status": 201,
+        "response": {
+          "id": "29",
+          "event_id": "16",
+          "user_id": "12",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "PUT",
+        "path": "/api/events/16",
+        "status": 200,
+        "response": {
+          "id": "16",
+          "title": "Capacity race",
+          "description": "",
+          "capacity": 1,
+          "start_time": "2026-10-10T13:10:42.373Z",
+          "status": "OPEN",
+          "organizer_id": "1"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/16/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_FULL",
+            "message": "Event is full"
+          }
+        }
+      }
+    ],
+    "observations": [
+      {
+        "query": "capacity-and-active-count",
+        "eventId": "16",
+        "capacity": 1,
+        "status": "OPEN",
+        "active": "1",
+        "row_count": "1"
+      }
+    ],
+    "endedAt": "2026-10-09T13:10:48.795Z"
+  },
+  {
+    "id": "CONC-003-R5",
+    "title": "Capacity reduction competes with last-place booking",
+    "startedAt": "2026-10-09T13:10:48.795Z",
+    "status": "Pass",
+    "steps": [
+      {
+        "method": "POST",
+        "path": "/api/events",
+        "status": 201,
+        "response": {
+          "id": "17",
+          "title": "Concurrency 1791551442373",
+          "description": "",
+          "capacity": 2,
+          "start_time": "2026-10-10T13:10:42.373Z",
+          "status": "OPEN",
+          "organizer_id": "1"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/17/book",
+        "status": 201,
+        "response": {
+          "id": "30",
+          "event_id": "17",
+          "user_id": "12",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/17/book",
+        "status": 201,
+        "response": {
+          "id": "31",
+          "event_id": "17",
+          "user_id": "13",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "PUT",
+        "path": "/api/events/17",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "CAPACITY_BELOW_BOOKINGS",
+            "message": "capacity is below active bookings"
+          }
+        }
+      }
+    ],
+    "observations": [
+      {
+        "query": "capacity-and-active-count",
+        "eventId": "17",
+        "capacity": 2,
+        "status": "OPEN",
+        "active": "2",
+        "row_count": "2"
+      }
+    ],
+    "endedAt": "2026-10-09T13:10:48.816Z"
+  },
+  {
+    "id": "CONC-004-R1",
+    "title": "Close competes with booking; later booking is rejected",
+    "startedAt": "2026-10-09T13:10:48.816Z",
+    "status": "Pass",
+    "steps": [
+      {
+        "method": "POST",
+        "path": "/api/events",
+        "status": 201,
+        "response": {
+          "id": "18",
+          "title": "Concurrency 1791551442373",
+          "description": "",
+          "capacity": 1,
+          "start_time": "2026-10-10T13:10:42.373Z",
+          "status": "OPEN",
+          "organizer_id": "1"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/18/book",
+        "status": 201,
+        "response": {
+          "id": "32",
+          "event_id": "18",
+          "user_id": "12",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "PATCH",
+        "path": "/api/events/18/close",
+        "status": 200,
+        "response": {
+          "id": "18",
+          "status": "CLOSED"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/18/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_CLOSED",
+            "message": "Closed events cannot be booked"
+          }
+        }
+      }
+    ],
+    "observations": [
+      {
+        "query": "capacity-and-active-count",
+        "eventId": "18",
+        "capacity": 1,
+        "status": "CLOSED",
+        "active": "1",
+        "row_count": "1"
+      }
+    ],
+    "endedAt": "2026-10-09T13:10:48.838Z"
+  },
+  {
+    "id": "CONC-004-R2",
+    "title": "Close competes with booking; later booking is rejected",
+    "startedAt": "2026-10-09T13:10:48.838Z",
+    "status": "Pass",
+    "steps": [
+      {
+        "method": "POST",
+        "path": "/api/events",
+        "status": 201,
+        "response": {
+          "id": "19",
+          "title": "Concurrency 1791551442373",
+          "description": "",
+          "capacity": 1,
+          "start_time": "2026-10-10T13:10:42.373Z",
+          "status": "OPEN",
+          "organizer_id": "1"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/19/book",
+        "status": 201,
+        "response": {
+          "id": "33",
+          "event_id": "19",
+          "user_id": "12",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "PATCH",
+        "path": "/api/events/19/close",
+        "status": 200,
+        "response": {
+          "id": "19",
+          "status": "CLOSED"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/19/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_CLOSED",
+            "message": "Closed events cannot be booked"
+          }
+        }
+      }
+    ],
+    "observations": [
+      {
+        "query": "capacity-and-active-count",
+        "eventId": "19",
+        "capacity": 1,
+        "status": "CLOSED",
+        "active": "1",
+        "row_count": "1"
+      }
+    ],
+    "endedAt": "2026-10-09T13:10:48.860Z"
+  },
+  {
+    "id": "CONC-004-R3",
+    "title": "Close competes with booking; later booking is rejected",
+    "startedAt": "2026-10-09T13:10:48.860Z",
+    "status": "Pass",
+    "steps": [
+      {
+        "method": "POST",
+        "path": "/api/events",
+        "status": 201,
+        "response": {
+          "id": "20",
+          "title": "Concurrency 1791551442373",
+          "description": "",
+          "capacity": 1,
+          "start_time": "2026-10-10T13:10:42.373Z",
+          "status": "OPEN",
+          "organizer_id": "1"
+        }
+      },
+      {
+        "method": "PATCH",
+        "path": "/api/events/20/close",
+        "status": 200,
+        "response": {
+          "id": "20",
+          "status": "CLOSED"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/20/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_CLOSED",
+            "message": "Closed events cannot be booked"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/20/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_CLOSED",
+            "message": "Closed events cannot be booked"
+          }
+        }
+      }
+    ],
+    "observations": [
+      {
+        "query": "capacity-and-active-count",
+        "eventId": "20",
+        "capacity": 1,
+        "status": "CLOSED",
+        "active": "0",
+        "row_count": "0"
+      }
+    ],
+    "endedAt": "2026-10-09T13:10:48.877Z"
+  },
+  {
+    "id": "CONC-005",
+    "title": "Two simultaneous cancellations release only one place",
+    "startedAt": "2026-10-09T13:10:48.877Z",
+    "status": "Pass",
+    "steps": [
+      {
+        "method": "POST",
+        "path": "/api/events",
+        "status": 201,
+        "response": {
+          "id": "21",
+          "title": "Concurrency 1791551442373",
+          "description": "",
+          "capacity": 1,
+          "start_time": "2026-10-10T13:10:42.373Z",
+          "status": "OPEN",
+          "organizer_id": "1"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/21/book",
+        "status": 201,
+        "response": {
+          "id": "34",
+          "event_id": "21",
+          "user_id": "12",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "DELETE",
+        "path": "/api/events/21/book",
+        "status": 200,
+        "response": {
+          "id": "34",
+          "event_id": "21",
+          "user_id": "12",
+          "status": "CANCELLED"
+        }
+      },
+      {
+        "method": "DELETE",
+        "path": "/api/events/21/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "BOOKING_CANCELLED",
+            "message": "Booking is already cancelled"
+          }
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/21/book",
+        "status": 201,
+        "response": {
+          "id": "35",
+          "event_id": "21",
+          "user_id": "13",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      }
+    ],
+    "observations": [
+      {
+        "query": "capacity-and-active-count",
+        "eventId": "21",
+        "capacity": 1,
+        "status": "OPEN",
+        "active": "0",
+        "row_count": "1"
+      }
+    ],
+    "endedAt": "2026-10-09T13:10:48.906Z"
+  },
+  {
+    "id": "DB-001",
+    "title": "No duplicated user/event pairs",
+    "startedAt": "2026-10-09T13:10:48.906Z",
+    "status": "Pass",
+    "steps": [],
+    "observations": [
+      {
+        "query": "duplicate-pairs",
+        "rows": []
+      }
+    ],
+    "endedAt": "2026-10-09T13:10:48.909Z"
+  },
+  {
+    "id": "DB-002",
+    "title": "No event exceeds capacity",
+    "startedAt": "2026-10-09T13:10:48.909Z",
+    "status": "Pass",
+    "steps": [],
+    "observations": [
+      {
+        "query": "over-capacity-events",
+        "rows": []
+      }
+    ],
+    "endedAt": "2026-10-09T13:10:48.910Z"
+  },
+  {
+    "id": "DB-003",
+    "title": "Foreign-key relationships remain intact",
+    "startedAt": "2026-10-09T13:10:48.910Z",
+    "status": "Pass",
+    "steps": [],
+    "observations": [
+      {
+        "query": "orphan-counts",
+        "orphan_events": "0",
+        "orphan_bookings": "0"
+      }
+    ],
+    "endedAt": "2026-10-09T13:10:48.912Z"
+  },
+  {
+    "id": "DB-004",
+    "title": "Public registration stores user role and bcrypt hashes",
+    "startedAt": "2026-10-09T13:10:48.912Z",
+    "status": "Pass",
+    "steps": [],
+    "observations": [
+      {
+        "query": "public-user-storage",
+        "rows": 12,
+        "roles": [
+          "user"
+        ],
+        "allHashesBcrypt": true,
+        "allHashesVerify": true
+      }
+    ],
+    "endedAt": "2026-10-09T13:10:49.760Z"
+  },
+  {
+    "id": "DB-005",
+    "title": "Cancel/rebook preserves ID and created time, advances update time",
+    "startedAt": "2026-10-09T13:10:49.760Z",
+    "status": "Pass",
+    "steps": [
+      {
+        "method": "POST",
+        "path": "/api/events",
+        "status": 201,
+        "response": {
+          "id": "22",
+          "title": "Concurrency 1791551442373",
+          "description": "",
+          "capacity": 1,
+          "start_time": "2026-10-10T13:10:42.373Z",
+          "status": "OPEN",
+          "organizer_id": "1"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/22/book",
+        "status": 201,
+        "response": {
+          "id": "36",
+          "event_id": "22",
+          "user_id": "3",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "DELETE",
+        "path": "/api/events/22/book",
+        "status": 200,
+        "response": {
+          "id": "36",
+          "event_id": "22",
+          "user_id": "3",
+          "status": "CANCELLED"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/22/book",
+        "status": 200,
+        "response": {
+          "id": "36",
+          "event_id": "22",
+          "user_id": "3",
+          "status": "ACTIVE",
+          "rebooked": true
+        }
+      }
+    ],
+    "observations": [
+      {
+        "query": "capacity-and-active-count",
+        "eventId": "22",
+        "capacity": 1,
+        "status": "OPEN",
+        "active": "0",
+        "row_count": "1"
+      },
+      {
+        "query": "lifecycle",
+        "before": {
+          "id": "36",
+          "status": "ACTIVE",
+          "created_at": "2026-10-09T21:10:49.770Z",
+          "updated_at": "2026-10-09T21:10:49.770Z"
+        },
+        "cancelled": {
+          "id": "36",
+          "status": "CANCELLED",
+          "created_at": "2026-10-09T21:10:49.770Z",
+          "updated_at": "2026-10-09T21:10:49.779Z"
+        },
+        "after": {
+          "id": "36",
+          "status": "ACTIVE",
+          "created_at": "2026-10-09T21:10:49.770Z",
+          "updated_at": "2026-10-09T21:10:49.787Z"
+        }
+      },
+      {
+        "query": "capacity-and-active-count",
+        "eventId": "22",
+        "capacity": 1,
+        "status": "OPEN",
+        "active": "1",
+        "row_count": "1"
+      }
+    ],
+    "endedAt": "2026-10-09T13:10:49.790Z"
+  },
+  {
+    "id": "DB-006",
+    "title": "Rejected capacity reduction leaves stored event unchanged",
+    "startedAt": "2026-10-09T13:10:49.790Z",
+    "status": "Pass",
+    "steps": [
+      {
+        "method": "POST",
+        "path": "/api/events",
+        "status": 201,
+        "response": {
+          "id": "23",
+          "title": "Concurrency 1791551442373",
+          "description": "",
+          "capacity": 2,
+          "start_time": "2026-10-10T13:10:42.373Z",
+          "status": "OPEN",
+          "organizer_id": "1"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/23/book",
+        "status": 201,
+        "response": {
+          "id": "37",
+          "event_id": "23",
+          "user_id": "12",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/api/events/23/book",
+        "status": 201,
+        "response": {
+          "id": "38",
+          "event_id": "23",
+          "user_id": "13",
+          "status": "ACTIVE",
+          "rebooked": false
+        }
+      },
+      {
+        "method": "PUT",
+        "path": "/api/events/23",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "CAPACITY_BELOW_BOOKINGS",
+            "message": "capacity is below active bookings"
+          }
+        }
+      }
+    ],
+    "observations": [
+      {
+        "query": "rollback-unchanged",
+        "before": {
+          "title": "Concurrency 1791551442373",
+          "description": "",
+          "capacity": 2,
+          "status": "OPEN",
+          "start_time": "2026-10-10T13:10:42.373Z",
+          "organizer_id": "1"
+        },
+        "after": {
+          "title": "Concurrency 1791551442373",
+          "description": "",
+          "capacity": 2,
+          "status": "OPEN",
+          "start_time": "2026-10-10T13:10:42.373Z",
+          "organizer_id": "1"
+        }
+      }
+    ],
+    "endedAt": "2026-10-09T13:10:49.812Z"
+  },
+  {
+    "id": "API-STARTED",
+    "title": "Started event rejects booking but allows own cancellation",
+    "startedAt": "2026-10-09T13:10:49.812Z",
+    "status": "Pass",
+    "steps": [
+      {
+        "method": "POST",
+        "path": "/api/events/24/book",
+        "status": 409,
+        "response": {
+          "error": {
+            "code": "EVENT_STARTED",
+            "message": "Started events cannot be booked"
+          }
+        }
+      },
+      {
+        "method": "DELETE",
+        "path": "/api/events/24/book",
+        "status": 200,
+        "response": {
+          "id": "39",
+          "event_id": "24",
+          "user_id": "3",
+          "status": "CANCELLED"
+        }
+      }
+    ],
+    "observations": [
+      {
+        "query": "capacity-and-active-count",
+        "eventId": "24",
+        "capacity": 1,
+        "status": "OPEN",
+        "active": "0",
+        "row_count": "1"
+      }
+    ],
+    "endedAt": "2026-10-09T13:10:49.833Z"
+  },
+  {
+    "id": "DB-007",
+    "title": "Public API active counts agree with database",
+    "startedAt": "2026-10-09T13:10:49.833Z",
+    "status": "Pass",
+    "steps": [
+      {
+        "method": "GET",
+        "path": "/api/events",
+        "status": 200,
+        "response": {
+          "events": [
+            {
+              "id": "24",
+              "title": "Started fixture",
+              "description": "",
+              "capacity": 1,
+              "status": "OPEN",
+              "organizer_id": "1",
+              "start_time": "2026-10-09T13:09:49.813Z",
+              "created_at": "2026-10-09T21:10:49.816Z",
+              "active_bookings": "0"
+            },
+            {
+              "id": "7",
+              "title": "Concurrency 1791551442373",
+              "description": "",
+              "capacity": 3,
+              "status": "OPEN",
+              "organizer_id": "1",
+              "start_time": "2026-10-10T13:10:42.373Z",
+              "created_at": "2026-10-09T21:10:48.435Z",
+              "active_bookings": "3"
+            },
+            {
+              "id": "8",
+              "title": "Concurrency 1791551442373",
+              "description": "",
+              "capacity": 3,
+              "status": "OPEN",
+              "organizer_id": "1",
+              "start_time": "2026-10-10T13:10:42.373Z",
+              "created_at": "2026-10-09T21:10:48.518Z",
+              "active_bookings": "3"
+            },
+            {
+              "id": "9",
+              "title": "Concurrency 1791551442373",
+              "description": "",
+              "capacity": 3,
+              "status": "OPEN",
+              "organizer_id": "1",
+              "start_time": "2026-10-10T13:10:42.373Z",
+              "created_at": "2026-10-09T21:10:48.560Z",
+              "active_bookings": "3"
+            },
+            {
+              "id": "10",
+              "title": "Concurrency 1791551442373",
+              "description": "",
+              "capacity": 3,
+              "status": "OPEN",
+              "organizer_id": "1",
+              "start_time": "2026-10-10T13:10:42.373Z",
+              "created_at": "2026-10-09T21:10:48.603Z",
+              "active_bookings": "3"
+            },
+            {
+              "id": "11",
+              "title": "Concurrency 1791551442373",
+              "description": "",
+              "capacity": 3,
+              "status": "OPEN",
+              "organizer_id": "1",
+              "start_time": "2026-10-10T13:10:42.373Z",
+              "created_at": "2026-10-09T21:10:48.645Z",
+              "active_bookings": "3"
+            },
+            {
+              "id": "12",
+              "title": "Concurrency 1791551442373",
+              "description": "",
+              "capacity": 3,
+              "status": "OPEN",
+              "organizer_id": "1",
+              "start_time": "2026-10-10T13:10:42.373Z",
+              "created_at": "2026-10-09T21:10:48.688Z",
+              "active_bookings": "1"
+            },
+            {
+              "id": "13",
+              "title": "Concurrency 1791551442373",
+              "description": "",
+              "capacity": 2,
+              "status": "OPEN",
+              "organizer_id": "1",
+              "start_time": "2026-10-10T13:10:42.373Z",
+              "created_at": "2026-10-09T21:10:48.712Z",
+              "active_bookings": "2"
+            },
+            {
+              "id": "14",
+              "title": "Concurrency 1791551442373",
+              "description": "",
+              "capacity": 2,
+              "status": "OPEN",
+              "organizer_id": "1",
+              "start_time": "2026-10-10T13:10:42.373Z",
+              "created_at": "2026-10-09T21:10:48.733Z",
+              "active_bookings": "2"
+            },
+            {
+              "id": "15",
+              "title": "Concurrency 1791551442373",
+              "description": "",
+              "capacity": 2,
+              "status": "OPEN",
+              "organizer_id": "1",
+              "start_time": "2026-10-10T13:10:42.373Z",
+              "created_at": "2026-10-09T21:10:48.755Z",
+              "active_bookings": "2"
+            },
+            {
+              "id": "16",
+              "title": "Capacity race",
+              "description": "",
+              "capacity": 1,
+              "status": "OPEN",
+              "organizer_id": "1",
+              "start_time": "2026-10-10T13:10:42.373Z",
+              "created_at": "2026-10-09T21:10:48.777Z",
+              "active_bookings": "1"
+            },
+            {
+              "id": "17",
+              "title": "Concurrency 1791551442373",
+              "description": "",
+              "capacity": 2,
+              "status": "OPEN",
+              "organizer_id": "1",
+              "start_time": "2026-10-10T13:10:42.373Z",
+              "created_at": "2026-10-09T21:10:48.798Z",
+              "active_bookings": "2"
+            },
+            {
+              "id": "18",
+              "title": "Concurrency 1791551442373",
+              "description": "",
+              "capacity": 1,
+              "status": "CLOSED",
+              "organizer_id": "1",
+              "start_time": "2026-10-10T13:10:42.373Z",
+              "created_at": "2026-10-09T21:10:48.820Z",
+              "active_bookings": "1"
+            },
+            {
+              "id": "19",
+              "title": "Concurrency 1791551442373",
+              "description": "",
+              "capacity": 1,
+              "status": "CLOSED",
+              "organizer_id": "1",
+              "start_time": "2026-10-10T13:10:42.373Z",
+              "created_at": "2026-10-09T21:10:48.842Z",
+              "active_bookings": "1"
+            },
+            {
+              "id": "20",
+              "title": "Concurrency 1791551442373",
+              "description": "",
+              "capacity": 1,
+              "status": "CLOSED",
+              "organizer_id": "1",
+              "start_time": "2026-10-10T13:10:42.373Z",
+              "created_at": "2026-10-09T21:10:48.864Z",
+              "active_bookings": "0"
+            },
+            {
+              "id": "21",
+              "title": "Concurrency 1791551442373",
+              "description": "",
+              "capacity": 1,
+              "status": "OPEN",
+              "organizer_id": "1",
+              "start_time": "2026-10-10T13:10:42.373Z",
+              "created_at": "2026-10-09T21:10:48.881Z",
+              "active_bookings": "1"
+            },
+            {
+              "id": "22",
+              "title": "Concurrency 1791551442373",
+              "description": "",
+              "capacity": 1,
+              "status": "OPEN",
+              "organizer_id": "1",
+              "start_time": "2026-10-10T13:10:42.373Z",
+              "created_at": "2026-10-09T21:10:49.764Z",
+              "active_bookings": "1"
+            },
+            {
+              "id": "23",
+              "title": "Concurrency 1791551442373",
+              "description": "",
+              "capacity": 2,
+              "status": "OPEN",
+              "organizer_id": "1",
+              "start_time": "2026-10-10T13:10:42.373Z",
+              "created_at": "2026-10-09T21:10:49.793Z",
+              "active_bookings": "2"
+            },
+            {
+              "id": "1",
+              "title": "Postman booking chain updated 1791551426095",
+              "description": "Updated before booking.",
+              "capacity": 1,
+              "status": "CLOSED",
+              "organizer_id": "1",
+              "start_time": "2026-10-16T13:10:26.095Z",
+              "created_at": "2026-10-09T21:10:27.852Z",
+              "active_bookings": "0"
+            },
+            {
+              "id": "2",
+              "title": "Extended test event",
+              "description": "",
+              "capacity": 2,
+              "status": "OPEN",
+              "organizer_id": "1",
+              "start_time": "2026-10-16T13:10:26.095Z",
+              "created_at": "2026-10-09T21:10:30.122Z",
+              "active_bookings": "1"
+            },
+            {
+              "id": "3",
+              "title": "x",
+              "description": "",
+              "capacity": 1,
+              "status": "OPEN",
+              "organizer_id": "1",
+              "start_time": "2026-10-16T13:10:26.095Z",
+              "created_at": "2026-10-09T21:10:38.599Z",
+              "active_bookings": "0"
+            },
+            {
+              "id": "4",
+              "title": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "description": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              "capacity": 100000,
+              "status": "OPEN",
+              "organizer_id": "1",
+              "start_time": "2026-10-16T13:10:26.095Z",
+              "created_at": "2026-10-09T21:10:38.692Z",
+              "active_bookings": "0"
+            },
+            {
+              "id": "6",
+              "title": "Extended test event",
+              "description": "",
+              "capacity": 1,
+              "status": "OPEN",
+              "organizer_id": "1",
+              "start_time": "2026-10-16T13:10:26.095Z",
+              "created_at": "2026-10-09T21:10:41.481Z",
+              "active_bookings": "1"
+            },
+            {
+              "id": "5",
+              "title": "Extended test event",
+              "description": "",
+              "capacity": 2,
+              "status": "OPEN",
+              "organizer_id": "1",
+              "start_time": "2099-01-01T00:00:00.000Z",
+              "created_at": "2026-10-09T21:10:38.784Z",
+              "active_bookings": "0"
+            }
+          ]
+        }
+      }
+    ],
+    "observations": [
+      {
+        "query": "api-db-count-comparison",
+        "eventsCompared": 24
+      }
+    ],
+    "endedAt": "2026-10-09T13:10:49.838Z"
+  }
+]

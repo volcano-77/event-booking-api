@@ -1,0 +1,90 @@
+{
+  "runId": "2026-10-09T13-10-16-694Z-7e89af",
+  "startedAt": "2026-10-09T13:10:16.701Z",
+  "timezone": "Asia/Shanghai",
+  "command": "$env:EVENT_BOOKING_ALLOW_TEST_WRITES=\"YES\"; npm run test:local",
+  "gitHead": "3a2ab14612b50b94cd97d008205413e25c60c2f7",
+  "branch": "main",
+  "workingTree": "Uncommitted testing portfolio improvements; file hashes identify tested sources",
+  "node": "v24.12.0",
+  "newman": "6.2.2",
+  "mysql": "mysqld  Ver 8.0.42 for Win64 on x86_64 (MySQL Community Server - GPL)",
+  "environment": {
+    "host": "127.0.0.1",
+    "dbPort": 11136,
+    "database": "event_booking_isolated",
+    "initialData": "Fresh directory; schema from src/db/schema.sql; two generated organizers",
+    "baseUrl": "http://127.0.0.1:11148"
+  },
+  "safety": {
+    "noExistingDatabaseUsed": true,
+    "noDropTruncateOrDelete": true,
+    "closeAuthorized": true,
+    "dataRetained": true,
+    "isolatedMysqlStopped": true,
+    "apiStopped": true
+  },
+  "files": {
+    "scripts/newman/build-collection.js": "51a4d23b1b7211f49120e700dab42d83bca24b3acf69d219d674e00f26a69ade",
+    "scripts/newman/run.js": "feb28f091402a11604bd7ea4ded4ac16be62f2b264d5c7f4461356a15f407595",
+    "scripts/testing/run-local.js": "006c27e1580f6dcb4cd4bf284e2cb447d477c48edeca57b5864aec1eff11965c",
+    "scripts/testing/serve-isolated.js": "7a4c20b9f856b13c5044626ae9f01908cf3536ea12d3713b95aa9220ba85824f",
+    "tests/concurrency-and-db.js": "f4f778eacf8f6586e33027e87838b29a9f971def01e1a2a73538da2f506b6cf1",
+    "docs/openapi.yaml": "3d2344fe7541e7ae5880b534088ca01ca441d39b39bbbedc078d2d314946a28c",
+    "package-lock.json": "c297719b80de07010ce90292eeffa38357bc9513241d22c18b091770be5d91b5",
+    "package.json": "389212a29e939a6a1ded6aea8a73524d81de27882c2f744461f706f742d1b288",
+    "postman/Event-Booking-API.postman_collection.json": "0c3437619878a4c0b9afefe23dd0ed40c35729d275dc1d7f67dc10eb3e1d50d3",
+    "postman/README.md": "0751ae158aa33d43c4c7fa8cc8f15335c170d761257d488e097159b8bc852122",
+    "postman/local.postman_environment.json": "5ede0573b37a72304e62ca84953b1b1657b54059cff92469fdbdf478a25f5155",
+    "scripts/create-organizer.js": "28dca04f543d6910052a5e38eba1970b180a358926703281ea082b50238d682b",
+    "scripts/init-db.js": "3cebf774cf475b60b89ab5e51aaf22efe21747cb24bea43884c66262a19d08b7",
+    "scripts/newman/README.md": "58fec38c7ac4de89b500be846bb7d3dba750c6cc329a92afd124321a61c47054",
+    "scripts/newman/run.ps1": "0ce718afba75f44f14b9a5939c17475b5ea145131aaa05b84ac0752c033c9275",
+    "scripts/smoke.js": "521c3865589ce65706495a3f6b47a312c8a996e5babf02cf67cd387982253787",
+    "sql-validation/README.md": "14f4a9679d55e0b0ac1e92a2480bd4aa134c91fe655d45128162d1cb8dfc1901",
+    "sql-validation/validation-queries.sql": "8f8b1c913328bede5f037afd3ee123aa59f721560296d991bc6f77dfbd90a00d",
+    "src/app.js": "04e1517790b57ab7a7f59c7c7ac88a1dcf35d2a9091213d190f335c255a19149",
+    "src/db/connection.js": "1898d31aae0986fe9c3977cd274f8d53ece5089b8f2b65ba4027c16dbd268895",
+    "src/db/schema.sql": "9677f267fc708ada698887812b1007e200740b3620d5da12b66c3b0680f64ae7",
+    "src/middleware/auth.js": "218682c1323aee2b2572cb43d144d1da6de0e13eb0c442fe0d3a08b4a8e2801f",
+    "src/routes/auth.routes.js": "34f553aa372087eeab4de870cccdb905ced67cb00aadf1d5e4b2eb808a07d4ba",
+    "src/routes/booking.routes.js": "7801376e322f43e4ad4056cf2cd16ae5c658d7e999a34ddf00f7d61cb90c5c3f",
+    "src/routes/event.routes.js": "59f823830b2ccaaf4d746c6d6fc35a2aa097516f216f049445afbe1bff551d6c",
+    "src/server.js": "546c2087041640b13ac1d68c84cf037b44eff5f9a4a9023606acf60fe7824df1",
+    "src/utils/http.js": "9a91ab89c9c11ca5a931993753b9dbb229238d716d8afaae3d8e3ba5c1c6cf98",
+    "src/validators/index.js": "b6f0d6e06d083233025799e79df8b7b6d61a0982d35820027f7868da49305d9f",
+    "tests/README.md": "9fb12942ef1326425192933f8871460e1a347d9a51d15ba0f3aaa1eb77d1db93"
+  },
+  "status": "Fail",
+  "phases": [
+    {
+      "name": "environment",
+      "status": "Pass",
+      "time": "2026-10-09T13:10:23.357Z"
+    },
+    {
+      "name": "newman",
+      "status": "Fail",
+      "requests": 141,
+      "failedAssertions": 1,
+      "notRun": 0
+    },
+    {
+      "name": "concurrency-db",
+      "status": "Pass",
+      "checks": 24,
+      "failed": 0,
+      "blocked": 0
+    },
+    {
+      "name": "sql-templates",
+      "status": "Executed",
+      "resultSets": 13
+    },
+    {
+      "name": "openapi-response-object-review",
+      "status": "Fail"
+    }
+  ],
+  "endedAt": "2026-10-09T13:10:49.884Z"
+}

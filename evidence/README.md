@@ -1,23 +1,18 @@
-# Test Evidence
+# 实际测试证据
 
-This directory is intentionally empty of execution evidence until formal testing begins.
+最新候选成果的从零安装及补充执行位于 [验收证据索引](acceptance/2026-10-09/execution-index.json)，结论见 [验收报告](../reports/acceptance-2026-10-09.md)。
 
-Store only artifacts produced by a real, identified execution, for example:
+evidence/runs/ 保存真实执行后自动生成的脱敏 JSON；当前索引和结论在 [测试报告](../reports/test-summary-2026-10-09.md)。
 
-```text
-evidence/
-  manual/<run-id>/<test-case-id>/
-  newman/<run-id>/newman-results.json
-  newman/<run-id>/newman-results.xml
-  sql/<run-id>/<test-case-id>.txt
-```
+- 2026-10-09T13-10-16-694Z-7e89af：首轮，保留人数类型断言失败、OpenAPI 审查失败。
+- 2026-10-09T13-13-20-568Z-7b6dd1：针对性独立复现，三项问题均 Fail。
+- 2026-10-09T13-14-52-379Z-381c55：修复后的完整回归。
+- 2026-10-09T13-19-35-543Z-cd8f6c：手工实验室启动及 Ctrl+C 停止检查；自动测试状态 Not Run。
 
-Recommended metadata for every artifact:
+以上复现与实验室两轮的 command 字段原先被硬编码为普通 test:local；正确调用见 [历史命令元数据更正](acceptance/2026-10-09/historical-command-errata.json)。更正文件保留原 manifest 的 SHA-256，未覆盖原始证据或结果。新的运行器已按模式记录真实命令。
 
-- Run ID and execution date/time.
-- Test case ID.
-- Environment name and API version or Git commit.
-- Request method and URL without secrets.
-- Relevant response and database observation.
+每轮 manifest 包括真实 UTC 时间、时区、命令、版本、Git HEAD、实际测试源码 SHA-256、环境和服务停止状态。测试在未提交工作树执行，所以单独一个 Git HEAD 不能标识全部被测代码；文件哈希补充这一点。
 
-Redact JWTs, passwords, database credentials, and unrelated personal data. Do not add fabricated screenshots, responses, SQL output, defects, or conclusions. Generated Newman evidence is ignored by Git by default; selectively add reviewed and redacted evidence only when it is appropriate to preserve it.
+newman.json 是经过选择字段及脱敏的运行结果，密码/授权头/Token 不保留；concurrency-db.json 是真实并发响应和数据库观察；sql-templates.json 是实际只读结果；regression-probe.json 是缺陷复现/回归。不是原始环境文件，不包含截图、数据库 dump 或真实用户账号。
+
+evidence/newman/、manual/、sql/ 保留为本地补充证据的忽略目录。发布前仍应人工复核脱敏内容。不要用不同运行编号的结果拼接成一次执行，也不要删除首轮失败来只展示绿色报告。

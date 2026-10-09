@@ -1,0 +1,22 @@
+{
+  "command": "npm ci --include=dev --cache .runtime/npm-cache --no-audit --no-fund",
+  "exitCode": 0,
+  "node": "v24.12.0",
+  "platform": "win32",
+  "architecture": "x64",
+  "npm": "11.6.2",
+  "startedAt": "2026-10-09T13:36:45.864Z",
+  "logLastWrittenAt": "2026-10-09T13:37:00.443Z",
+  "packagesAdded": 241,
+  "initialNodeModulesAbsent": true,
+  "initialCacheAbsent": true,
+  "fullDependencyInstall": true,
+  "registryHosts": [
+    "registry.npmmirror.com"
+  ],
+  "warnings": [
+    "Deprecated transitive packages inflight, har-validator, glob, uuid, faker; not suppressed",
+    "Dependency vulnerability audit was not executed"
+  ],
+  "dependencyLocationVerified": true
+}

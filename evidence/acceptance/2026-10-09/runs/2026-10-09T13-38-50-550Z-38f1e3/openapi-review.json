@@ -1,0 +1,6 @@
+{
+  "id": "DOC-001",
+  "description": "Response Object allows only OpenAPI response properties",
+  "status": "Pass",
+  "issues": []
+}

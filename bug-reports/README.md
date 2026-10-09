@@ -1,13 +1,13 @@
-# Bug Reports
+# 缺陷记录
 
-No confirmed defect is recorded here. Create a report only after an executed test reveals reproducible behavior that differs from the documented expected result.
+本轮真实发现、复现并修复了三个问题，均有修复前失败与修复后回归证据：
 
-Before creating a report:
+| ID | 问题 | 当前状态 |
+| --- | --- | --- |
+| BUG-001 | API active_bookings 返回字符串而 OpenAPI 声明整数 | Closed（已修复、已回归） |
+| BUG-002 | SYSTEM +08:00 与驱动 UTC 转换导致时间戳偏移 8 小时 | Closed（已修复、已回归） |
+| BUG-003 | OpenAPI 注册响应内联 YAML 逗号被解析为额外字段 | Closed（已修复、已回归） |
 
-1. Repeat the request with controlled data.
-2. Confirm the expected behavior from the business rules and OpenAPI contract.
-3. Check whether the response is an expected negative result.
-4. Capture sanitized API and optional SQL evidence.
-5. Copy `bug-report-template.md`, assign a new ID, and link the originating test case.
+详情见同目录对应文件，执行汇总见 reports/test-summary-2026-10-09.md。当前已知未关闭缺陷为 0，仅限本轮验证范围，不代表系统不存在其他问题。
 
-The presence of the template does not mean a bug has been found.
+以后遇到异常先确认需求、前置和环境，再复现并复制 bug-report-template.md。预期中的 400/401/403/404/409 不是缺陷；模板本身不意味着发现了 Bug。

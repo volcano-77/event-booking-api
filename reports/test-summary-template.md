@@ -9,11 +9,13 @@
 | Run ID | `[Pending]` |
 | Execution status | `Pending` |
 | Scope | `[Pending]` |
+| Outcome vocabulary | `Pass / Fail / Blocked / Not Run; use only evidence-backed values` |
 | Start/end time | `[Pending]` |
 | Tester | `[Pending]` |
 | API base URL | `[Pending]` |
 | Database/environment | `[Pending]` |
 | Git commit | `[Pending]` |
+| Dirty worktree/source hashes | `[Pending; HEAD alone may not identify tested code]` |
 | Postman/Newman version | `[Pending]` |
 
 ## 2. Scope executed
@@ -47,6 +49,8 @@
 ## 6. Blockers and limitations
 
 `[Pending]`
+
+List manual cases not executed, skipped fixture-dependent requests, concurrency workload limits, environment errors, and service/data cleanup status separately. Do not count these as passed tests.
 
 ## 7. Evidence index
 

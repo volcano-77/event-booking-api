@@ -9,6 +9,10 @@ const eventSelect = `SELECT e.id, e.title, e.description, e.capacity, e.status, 
   e.start_time, e.created_at, COALESCE(c.active_bookings, 0) AS active_bookings
   FROM events e LEFT JOIN (SELECT event_id, COUNT(*) AS active_bookings FROM bookings WHERE status = 'ACTIVE' GROUP BY event_id) c ON c.event_id = e.id`;
 
+// mysql2 returns COUNT/BIGINT as strings with bigNumberStrings enabled.
+// A booking count is bounded by capacity (100000), so numeric JSON is safe here.
+const eventResponse = event => ({ ...event, active_bookings: Number(event.active_bookings) });
+
 async function getEvent(id, db = pool, lock = false) {
   const [rows] = await db.execute(`SELECT * FROM events WHERE id = ?${lock ? ' FOR UPDATE' : ''}`, [id]);
   if (!rows.length) fail(404, 'EVENT_NOT_FOUND', 'Event not found');
@@ -31,14 +35,14 @@ function eventInput(body) {
 
 router.get('/', wrap(async (req, res) => {
   const [rows] = await pool.query(`${eventSelect} ORDER BY e.start_time ASC, e.id ASC`);
-  res.json({ events: rows });
+  res.json({ events: rows.map(eventResponse) });
 }));
 
 router.get('/:id', wrap(async (req, res) => {
   const id = v.id(req.params.id);
   const [rows] = await pool.execute(`${eventSelect} WHERE e.id = ?`, [id]);
   if (!rows.length) fail(404, 'EVENT_NOT_FOUND', 'Event not found');
-  res.json(rows[0]);
+  res.json(eventResponse(rows[0]));
 }));
 
 router.post('/', authenticate, requireRole('organizer'), wrap(async (req, res) => {

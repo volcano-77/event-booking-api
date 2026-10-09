@@ -30,15 +30,18 @@ components:
         capacity: { type: integer, minimum: 1, maximum: 100000 }
         start_time: { type: string, format: date-time, description: Future timestamp with explicit timezone }
     Event:
-      allOf:
-        - $ref: '#/components/schemas/EventInput'
-        - type: object
-          properties:
-            id: { type: string, example: '1' }
-            status: { type: string, enum: [OPEN, CLOSED] }
-            organizer_id: { type: string }
-            active_bookings: { type: integer }
-            created_at: { type: string, format: date-time }
+      type: object
+      required: [id, title, description, capacity, status, organizer_id, start_time, active_bookings, created_at]
+      properties:
+        id: { type: string, example: '1' }
+        title: { type: string }
+        description: { type: string }
+        capacity: { type: integer }
+        start_time: { type: string, format: date-time }
+        status: { type: string, enum: [OPEN, CLOSED] }
+        organizer_id: { type: string }
+        active_bookings: { type: integer, minimum: 0 }
+        created_at: { type: string, format: date-time }
     Booking:
       type: object
       properties:
@@ -53,7 +56,7 @@ components:
       name: id
       in: path
       required: true
-      description: Positive decimal integer without leading zeros or suffix
+      description: Positive decimal integer without leading zeros or suffix; maximum 9007199254740991
       schema: { type: string, pattern: '^[1-9][0-9]*$' }
   responses:
     BadRequest:
@@ -89,7 +92,7 @@ paths:
                 email: { type: string, format: email }
                 password: { type: string, minLength: 8, maxLength: 72, description: At most 72 UTF-8 bytes }
       responses:
-        '201': { description: User created with ID, username, email, and role }
+        '201': { description: 'User created with ID, username, email, and role' }
         '400': { $ref: '#/components/responses/BadRequest' }
         '409': { $ref: '#/components/responses/Conflict' }
   /api/auth/login:

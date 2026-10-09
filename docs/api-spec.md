@@ -16,3 +16,5 @@ Example event input:
 ```
 
 `PUT /api/events/:id` replaces these editable fields. `description` is optional and becomes empty when omitted. `POST /api/events/:id/book` returns `201` for a new booking and `200` for a reactivated cancelled booking. Both booking POST and close PATCH accept an empty object or no body.
+
+Cancellation DELETE selects only the token user and path event ID. Its body/query fields are ignored, so do not expect UNKNOWN_FIELD from DELETE or use a supplied user_id to choose another user's booking. JSON-field whitelist checks apply to register/login, create/update, close PATCH, and booking POST.

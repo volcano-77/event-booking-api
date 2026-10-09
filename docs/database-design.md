@@ -2,6 +2,8 @@
 
 The schema is [schema.sql](../src/db/schema.sql). It uses MySQL 8 InnoDB and three tables.
 
+Dates use UTC driver conversion and `SET time_zone = '+00:00'` on each pooled connection. Both are required: driver timezone alone does not change MySQL TIMESTAMP/NOW session behavior. The isolated test SQL connection also uses UTC. See BUG-002 and its real reproduction evidence.
+
 | Table | Purpose | Important constraints and indexes |
 | --- | --- | --- |
 | `users` | Identity and role | Unique username and email; role restricted to `user` or `organizer` |

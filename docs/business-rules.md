@@ -7,7 +7,7 @@ This document defines the first version of the system before implementation. The
 1. Anyone may list events and read event details. Booking and personal booking history require a valid JWT.
 2. Public registration always creates a `user`. A client supplied `role` is rejected. An operator creates an organizer through the local `npm run create:organizer` command with database access; no public endpoint grants that role.
 3. Only organizers create events. Only the event's organizer may edit or close it, or read its booking list. Users cannot edit events. Organizers cannot book events.
-4. A user may read only their own bookings and may cancel only their own booking. The cancellation endpoint identifies the booking from the authenticated user and event ID; it never accepts a user ID.
+4. A user may read only their own bookings and may cancel only their own booking. Cancellation identifies the booking from the authenticated user and event ID. DELETE body/query values do not select another user; the current DELETE handler ignores body/query fields rather than applying a JSON-field whitelist.
 5. Missing, malformed, invalid, and expired JWTs return `401`, with distinct stable error codes. A valid identity without the needed role or ownership returns `403`.
 
 ## Events
@@ -32,4 +32,4 @@ This document defines the first version of the system before implementation. The
 - `404 NOT_FOUND`: a validly identified resource or the user's own booking does not exist.
 - `409 CONFLICT`: duplicate username/email, duplicate active booking, full/closed/started event, repeated cancellation, or capacity below active bookings.
 
-Responses use `{ "error": { "code": "...", "message": "..." } }`. Internal database failures return `500` without exposing credentials or SQL. Unexpected fields are rejected to make parameter testing deterministic.
+Responses use `{ "error": { "code": "...", "message": "..." } }`. Internal database failures return `500` without exposing credentials or SQL. Register/login, create/update event, close PATCH, and booking POST reject unknown JSON fields. GET and cancellation DELETE do not apply that body whitelist; ignored fields never override the authenticated identity.

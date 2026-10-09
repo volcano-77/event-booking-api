@@ -14,4 +14,14 @@ const config = {
 };
 
 const pool = mysql.createPool({ ...config, waitForConnections: true, connectionLimit: 10 });
+// Driver timezone controls Date conversion; TIMESTAMP/NOW also need a UTC session.
+// mysql2 emits connection before handing it out; this command queues first.
+pool.on('connection', connection => {
+  connection.query("SET time_zone = '+00:00'", error => {
+    if (error) {
+      console.error('Database session timezone initialization failed:', error.code);
+      connection.destroy();
+    }
+  });
+});
 module.exports = { pool, config };

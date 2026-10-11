@@ -45,7 +45,7 @@ async function main() {
     command:'$env:EVENT_BOOKING_ALLOW_TEST_WRITES="YES"; '+(process.argv.includes('--lab')?'npm run test:lab':process.argv.includes('--probe')?'npm run test:local -- --probe':'npm run test:local'),
     gitHead:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),
     branch:execFileSync('git',['branch','--show-current'],{cwd:root,encoding:'utf8'}).trim(),
-    workingTree:'Uncommitted testing portfolio improvements; file hashes identify tested sources',
+    workingTree:'File hashes identify tested sources; gitHead records the repository commit',
     node:process.version,newman:require('newman/package.json').version,
     mysql:execFileSync(exe,['--version'],{encoding:'utf8'}).trim().replace(exe,'mysqld'),
     environment:{host:'127.0.0.1',dbPort,database,initialData:'Fresh directory; schema from src/db/schema.sql; two generated organizers'},

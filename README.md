@@ -1,6 +1,6 @@
-# 活动预约接口测试作品集
+# 活动预约 API 测试
 
-面向初级软件测试岗位的本地实践项目：11 个 REST API、MySQL 三表、Postman/Newman、SQL 验证及有限并发。包含可执行资产和真实脱敏记录，便于后续结合网课学习、复现和讲解。
+活动预约 API 与测试项目，包含 11 个 REST API、MySQL 三表、Postman/Newman 自动化、SQL 验证及有限并发检查。仓库提供可执行测试资产、脱敏证据、缺陷记录和结果边界。
 
 ## 当前状态
 
@@ -13,7 +13,7 @@
 | 手工材料 | 保留原 63 条手工用例，多组输入不能由单次自动化代替 | Not Run（未逐条人工执行） |
 | 未验证范围 | 生产压测、长稳、多实例、数据库故障注入、全面渗透、Postman GUI 人工执行 | 未执行 |
 
-完整过程见 [实际测试报告](reports/test-summary-2026-10-09.md)。首轮失败证据保留，不宣称系统不存在其他问题，也不将负向预期响应当作 Bug。
+完整过程见 [实际测试报告](reports/test-summary-2026-10-09.md)。2026-10-11 在新隔离实例复核同一范围：143 请求、418 断言、24 项补充检查、3 项缺陷回归和 13 组 SQL 观察，结果见[本轮证据](evidence/runs/2026-10-11T01-25-31-505Z-c17380/manifest.json)。首轮失败证据保留，不宣称系统不存在其他问题，也不将负向预期响应当作 Bug。
 
 ## 一键复现
 
@@ -22,8 +22,8 @@
 获取本仓库 main 分支的完整 Git 工作副本，并进入项目目录：
 
 ~~~powershell
-git clone https://github.com/volcano-77/event-booking-api-testing.git
-Set-Location event-booking-api-testing
+git clone https://github.com/volcano-77/event-booking-api.git
+Set-Location event-booking-api
 npm ci --include=dev
 $env:EVENT_BOOKING_ALLOW_TEST_WRITES = 'YES'
 npm run test:local
@@ -35,7 +35,7 @@ npm run test:local
 
 最终验收与从零安装验证见 [验收报告](reports/acceptance-2026-10-09.md)。本机独立副本的验证不等同于另一台物理电脑实测。
 
-### 网课学完，从 Postman 开始
+### 手工 Postman 检查
 
 ~~~powershell
 $env:EVENT_BOOKING_ALLOW_TEST_WRITES = 'YES'
@@ -90,7 +90,7 @@ Organizer 发布有限名额的活动，User 浏览、预约、取消；取消�
 | [实际证据](evidence/README.md) | 首轮失败、独立复现、完整回归索引 |
 | [真实缺陷](bug-reports/README.md) | 三个已关闭问题及回归链接 |
 | [测试报告](reports/test-summary-2026-10-09.md) | 实际范围、统计、未执行项、修改清单 |
-| [求职与学习指南](docs/portfolio-guide.md) | 可诚实表达的项目介绍、展示顺序、知识清单 |
+| [项目导览](docs/project-guide.md) | 验证路径、关键检查点与代码入口 |
 
 ## 命令
 
@@ -106,7 +106,7 @@ Organizer 发布有限名额的活动，User 浏览、预约、取消；取消�
 
 若要独立运行服务：复制 .env.example 为 .env，填写专用数据库参数和至少 32 字符随机 JWT_SECRET；npm run db:init 创建库表（不会重置已有记录），npm start 启动服务。Organizer 用临时 ORGANIZER_PASSWORD 环境变量和 npm run create:organizer -- <username> <email> 创建。不要使用生产数据库或真实账号。
 
-npm run smoke 是原开发检查，会清理其创建的数据，本轮未运行；不要在不理解数据删除范围时执行。正式作品集证据来自上述隔离运行器。
+npm run smoke 是原开发检查，会清理其创建的数据，本轮未运行；不要在不理解数据删除范围时执行。本仓库的执行证据来自上述隔离运行器。
 
 ## 技术与安全
 
@@ -114,4 +114,4 @@ Node.js、Express、mysql2/MySQL 8、bcrypt、jsonwebtoken、OpenAPI、Postman/N
 
 .env、node_modules、.runtime、日志和本地环境导出被 Git 忽略。测试运行不自动 git add/commit/push。报告不存密码、JWT、数据库 dump；共享前仍应人工审查。初始化的数据目录可能较大，清理是独立删除操作，不自动执行。
 
-作品集由工具辅助建设。后续应自己复现、理解并说明参与方式，不将尚未掌握的代码声称为独立完成，不虚构企业项目或线上经验。
+部分开发与测试资产使用 AI 工具辅助完成，验证结果与限制以仓库记录为准。

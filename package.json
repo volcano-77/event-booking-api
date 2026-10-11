@@ -1,5 +1,5 @@
 {
-  "name": "event-booking-api-testing",
+  "name": "event-booking-api",
   "version": "1.0.0",
   "private": true,
   "description": "A small event booking API built as a system under test",

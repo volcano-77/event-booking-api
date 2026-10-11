@@ -1,4 +1,4 @@
-# 接口测试作品集建设与实际执行报告
+# 活动预约 API 测试建设与实际执行报告
 
 > 本报告记录项目建设阶段，文件数量及“未执行”项是当时快照。之后的最终验收、脚本修复和补充执行见 [验收报告](acceptance-2026-10-09.md)。两条历史 manifest 的 command 字段曾硬编码错误，正确命令见 [元数据更正](../evidence/acceptance/2026-10-09/historical-command-errata.json)；原始结果和哈希保留不变。
 
@@ -11,7 +11,7 @@
 - 新建安全隔离运行器、手工 Postman 实验室、有限并发与数据库断言；每轮独立 MySQL 数据目录、动态端口、回环监听，自动停止自己的服务，保留数据。
 - Newman 使用程序化接口，仅输出脱敏的选择字段；替换旧的原始 JSON/JUnit 导出，避免报告夹带密码/Token。
 - 真实发现三项问题，独立复现、最小修复、完整回归；修复前失败记录保留。
-- 更新中文 README、测试计划/范围、执行说明、SQL 文档、缺陷记录、证据索引、报告模板和求职学习指南。
+- 更新中文 README、测试计划/范围、执行说明、SQL 文档、缺陷记录、证据索引、报告模板和项目导览。
 
 ## 2. 环境与源码识别
 
@@ -159,7 +159,7 @@ git rev-list --count HEAD
 - [bug-reports/BUG-001-active-count-type.md](../bug-reports/BUG-001-active-count-type.md)
 - [bug-reports/BUG-002-utc-timestamps.md](../bug-reports/BUG-002-utc-timestamps.md)
 - [bug-reports/BUG-003-openapi-yaml.md](../bug-reports/BUG-003-openapi-yaml.md)
-- [docs/portfolio-guide.md](../docs/portfolio-guide.md)
+- [项目导览](../docs/project-guide.md)（后续更名）
 - [docs/running-tests.md](../docs/running-tests.md)
 - [evidence/runs/2026-10-09T13-10-16-694Z-7e89af/concurrency-db.json](../evidence/runs/2026-10-09T13-10-16-694Z-7e89af/concurrency-db.json)
 - [evidence/runs/2026-10-09T13-10-16-694Z-7e89af/manifest.json](../evidence/runs/2026-10-09T13-10-16-694Z-7e89af/manifest.json)
@@ -196,19 +196,14 @@ package-lock.json 未修改，因为没有变更依赖；测试脚本只调整 p
 - 工作区：21 个修改文件、28 个未跟踪新文件；未提交的建设成果是预期状态。
 - 没有自动 commit、push、fetch 或修改远程配置。
 
-## 10. 后续学习知识清单与入口
+## 10. 复现路径与关键检查点
 
-无需先掌握后才使用。网课学完后按 [求职与学习指南](../docs/portfolio-guide.md) 的顺序操作：
+1. 运行 `npm run test:lab`，导入本地环境和 Collection，按注册、登录、活动、预约、取消与重约的顺序手工检查。
+2. 核对 Method、URL、JSON、header、状态码和业务错误码；区分 401 与 403。
+3. 检查动态变量、Token 提取、前置依赖、断言和 Newman 运行结果。
+4. 用 capacity=0、1、100000、100001 核对边界与数据类型。
+5. 用 SQL 验证 ACTIVE/CANCELLED、人数、唯一 user/event 行、ID 和时间戳。
+6. 对照缺陷记录检查事务、行锁、回滚、UTC 会话与并发结果边界。
+7. 区分首轮失败、针对性复现、修复后回归，以及 Fail、Blocked、Not Run。
 
-1. npm run test:lab → 导入本地环境和 Collection → 手工从注册、登录开始逐个 Send。
-2. 理解 Method/URL/JSON/header/状态码与业务错误码。
-3. 理解 JWT/Bearer、401 与 403、角色权限与活动归属。
-4. 理解动态变量、Token 提取、前置依赖、assertion 和 Newman。
-5. 用 capacity=0、1、100000、100001 练边界，区分数值与字符串。
-6. 用 SQL 验证 ACTIVE/CANCELLED、人数、唯一 user/event 行、ID 与时间戳。
-7. 理解事务/事件行锁/唯一约束/回滚，以及并发测试的允许结果与限制。
-8. 学会写可复现缺陷、比对首轮与回归证据，分清 Fail/Blocked/Not Run。
-9. 理解 UTC、session 时区、UTF-8 字节与字符长度。
-10. 复现后再用求职指南的真实表达介绍项目，说明工具辅助和自己实际理解的部分。
-
-本轮限定结论：当前记录的自动化范围在修复后完整回归通过，作品集具备可执行环境、用例、脱敏证据和缺陷闭环。人工逐条学习执行和高负载等未执行范围明确保留。
+本轮限定结论：记录的自动化范围在修复后完整回归通过；可执行环境、用例、脱敏证据和缺陷闭环均有对应记录。原 63 条手工用例尚未逐条人工执行，高负载等范围未执行。
